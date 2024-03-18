@@ -1,0 +1,283 @@
+.dashboard__container {
+    padding: 3rem;
+
+    h1 {
+        font-size: 37px !important;
+        text-align: center;
+        margin-bottom: 1rem;
+        font-weight: 400 !important;
+    }
+
+    &>p {
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+
+    .cards__container {
+        // display: grid;
+        // grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+        // grid-gap: 1.5rem;
+
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1.5rem;
+
+        margin-bottom: 1.5rem;
+
+        .card {
+            flex: 1 1 18rem;
+            background-color: getColor(backgroundDim);
+            border-radius: $border-radius;
+            text-align: center;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            padding: 26px 32px;
+
+            .dark-theme & {
+                background-color: #1A1D1F !important;
+                border: none;
+            }
+
+            h3 {
+                padding-left: 16px;
+            }
+
+            svg {
+                height: 51px;
+            }
+
+            .exchange-icon svg {
+                fill: #D74136 !important;
+            }
+
+            .swap-icon svg {
+                fill: #3AC361 !important;
+            }
+
+            .pool-icon svg {
+                fill: #FEA722 !important;
+            }
+
+        }
+    }
+
+    .content {
+        gap: 1.5rem;
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+
+        &__info {
+            margin-top: 0px;
+
+            section {
+                padding: 3rem;
+                border-radius: $border-radius;
+                background-color: #ffffff65;
+
+                .dark-theme & {
+                    background-color: #1A1D1F;
+                    border: none;
+                }
+            }
+
+            section:last-child {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                margin-top: 2rem;
+
+                p {
+                    color: $clr-primary;
+                    font-weight: 700 !important;
+                }
+
+                img {
+                    width: 13rem;
+                }
+            }
+        }
+
+        &__detail {
+            flex: 1;
+            border-radius: $border-radius;
+            position: relative;
+            background-color: #ffffff65;
+
+            .dark-theme & {
+                background-color: #1A1D1F;
+                border: none;
+            }
+
+            header {
+                margin: 2rem;
+
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-start;
+
+                .left {
+                    display: flex;
+                    gap: 1rem;
+
+                    img {
+                        width: 4rem;
+                    }
+
+                    h3 {
+                        display: flex;
+                        flex-direction: column;
+                        line-height: 0.9;
+                    }
+
+                    span {
+                        font-size: 12px;
+                        font-weight: 300;
+                    }
+                }
+
+                .btn {
+                    padding: 8px 10px;
+                    font-size: 14px;
+                    font-weight: 400;
+                    color: $clr-text;
+                    border-radius: 8px;
+                    border: none;
+                    background-color: transparent;
+                }
+
+                .btn-group {
+                    border-radius: 8px;
+                    padding: 5px;
+                    border: 1px solid #C6C6C6;
+                    background-color: transparent;
+
+                    .dark-theme & {
+                        border-color: #3C4145;
+                    }
+                }
+
+                .btn-group {
+                    gap: 1rem;
+                }
+
+                .btn-active,
+                .btn:is(:hover, :active, :focus) {
+                    background-color: #448AFF;
+                    color: $clr-white;
+
+                    .dark-theme & {
+                        background-color: #448AFF;
+                    }
+                }
+            }
+
+            .money {
+                color: $clr-primary;
+                position: absolute;
+                bottom: 2.5rem;
+                left: 3.5rem;
+            }
+
+            .ratio {
+                font-size: $h3-size !important;
+                color: #ff6464;
+                position: absolute;
+                bottom: 2.5rem;
+                right: 3.5rem;
+                display: flex;
+                gap: 1rem;
+                align-items: center;
+
+                img {
+                    transform: translateY(-3px);
+                    width: 3rem;
+                }
+            }
+        }
+    }
+
+    @media only screen and (max-width: 1280px) {
+        padding: 1.5rem;
+
+        .card {
+            margin-bottom: 20px;
+        }
+
+        .content {
+            display: block;
+
+            .btn-group {
+                margin-top: 20px;
+            }
+        }
+    }
+
+    @media only screen and (max-width: 500px) {
+        .cards__container {
+            width: 100%;
+            display: block;
+        }
+
+        .card {
+            margin-bottom: 20px;
+        }
+
+        .content {
+            &__detail {
+                header {
+                    .btn {
+                        padding: 0.6rem 1rem;
+                    }
+                }
+            }
+
+
+            display: block;
+
+            .btn-group {
+                margin-top: 20px;
+            }
+        }
+    }
+
+    @media only screen and (max-width: 375px) {
+        .cards__container {
+            .card {
+                margin-bottom: 20px;
+            }
+        }
+
+        .content {
+            display: block;
+            .btn-group {
+                margin-top: 20px;
+            }
+
+            &__detail {
+                header {
+                    .btn {
+                        padding: 0.6rem 1rem;
+                    }
+                }
+            }
+        }
+
+        @media only screen and (max-width: 320px) {
+            .cards__container {
+                .card {
+                    margin-bottom: 20px;
+                }
+            }
+
+            .content {
+                display: block;
+    
+                .btn-group {
+                    margin-top: 20px;
+                }
+            }
+        }
+    }
+}

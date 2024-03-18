@@ -1,0 +1,6 @@
+.bridge__container {
+    @media only screen and (max-width: 800px) {
+        position: static;
+        min-height: calc(90vh - $header-size);
+    }
+}

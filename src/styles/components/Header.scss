@@ -1,0 +1,175 @@
+.header {
+    background-color: getColor(base);
+    padding: 2rem 13rem;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 1.3rem;
+    height: $header-size;
+    border: 0.5px solid #FFFFFF;
+    box-shadow: inset 0px 1px 2px #FFFFFF;
+    backdrop-filter: blur(13.5px);
+    border-radius: 20px;
+    position: relative;
+
+    .dark-theme & {
+        border: none;
+        border-radius: 0;
+        box-shadow: none;
+        background-color: #1A1D1F;
+    }
+
+    .logo__container {
+        margin-right: auto;
+        height: 100%;
+        cursor: pointer;
+
+        img {
+            height: 100%;
+            object-fit: cover;
+        }
+    }
+
+    .d-btn-outline {
+        border-color: #373737;
+    }
+
+    .app__menu {
+        padding: 3rem;
+        box-shadow: none;
+        top: 0;
+    }
+
+    .dark-theme & .d-btn-profile {
+        border: none;
+        background: #33383F;
+        color: white;
+    }
+
+    @keyframes slideLeft {
+        from {
+            top: $header-size;
+            left: 100%;
+            right: 0;
+            bottom: 0;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        to {
+            left: 0;
+            opacity: 1;
+            visibility: visible;
+            pointer-events: all;
+            z-index: 15;
+        }
+    }
+
+    @keyframes slideDown {
+        from {
+            top: 70%;
+            left: 0;
+            right: 0;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        to {
+            top: 100%;
+            opacity: 1;
+            visibility: visible;
+            pointer-events: all;
+            z-index: 15;
+        }
+    }
+
+    @media only screen and (max-width: 1280px) {
+        padding: 2rem 4rem;
+    }
+
+    @media only screen and (max-width: 800px) {
+        padding: 1rem 2rem;
+        border-bottom-left-radius: $border-radius;
+        border-bottom-right-radius: $border-radius;
+    }
+
+    @media only screen and (max-width: 500px) {
+        .d-btn-profile {
+            padding: 0.5rem;
+
+            &>div {
+                transform: translateY(-0.2px);
+            }
+        }
+    }
+}
+
+
+.mobile__menu-container {
+    position: fixed;
+    width: 100vw;
+    background-color: #eef1f4;
+    top: $header-size;
+    left: -100px;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    z-index: 9;
+    overflow-y: scroll;
+
+    animation: slideLeft 0.3s linear forwards;
+
+    .dark-theme & {
+        background-color: #1A1D1F;
+    }
+
+    ~header {
+        border-radius: 0;
+        border: none;
+    }
+}
+
+.wallet-modal {
+    background-color: white;
+    z-index: 20;
+    color: black;
+    border-radius: 6rem;
+    background-color: #f3f3f3;
+    padding: 3rem;
+
+    & svg {
+        fill: black !important;
+    }
+
+    .button-group {
+        & > div {
+            background-color: white;
+            border-radius: 3rem;
+            cursor: pointer;
+        }
+    }
+
+    .dark-theme ~& {
+        background-color: #1A1D1F;
+        color: white;
+
+        & svg {
+            fill: white !important;
+        }
+
+        .button-group {
+            & > div {
+                background-color: #1f2224;
+            }
+        }
+    
+    }
+}
+
+.wallet-modal-mask {
+    backdrop-filter: blur(4px);
+}

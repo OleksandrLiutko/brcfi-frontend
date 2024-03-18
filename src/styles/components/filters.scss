@@ -1,0 +1,73 @@
+.filters__container {
+    min-width: 16rem;
+    position: absolute;
+    z-index: 5;
+    top: 0rem;
+    right: 0rem;
+    background-color: getColor(base1);
+    padding: 1rem 1.5rem;
+    border-radius: 8px;
+    margin-top: 1rem;
+    margin-right: 1rem;
+
+    transition: 0.25s;
+
+    &.active {
+        border-bottom-left-radius: 0px;
+        border-bottom-right-radius: 0px;
+    }
+
+    h5 {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        font-weight: 700;
+        font-size: 1.6rem;
+    }
+
+    .filters__list {
+        background-color: getColor(base1);
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+
+        height: 0;
+
+        overflow: hidden;
+
+        &.active {
+            overflow: initial;
+            height: max-content;
+        }
+
+        .filter__item {
+            padding: 0.5rem 0.8rem;
+            margin: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            border: 1px solid getColor(border);
+            border-radius: 5px;
+            font-size: 1.5rem;
+            cursor: pointer;
+
+            &:not(:last-child) {
+                margin-bottom: 1rem;
+            }
+
+            &:is(:active, :focus, :hover, .active) {
+                svg {
+                    stroke: $clr-primary;
+                }
+            }
+        }
+    }
+
+    @media only screen and (max-width: 500px) {
+        position: relative;
+        top: initial;
+        right: initial;
+    }
+}

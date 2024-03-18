@@ -1,0 +1,86 @@
+.dao__container {
+    padding: 3.5rem;
+
+    .menu__container {
+        margin-top: 1rem;
+        padding: 3rem 3.5rem;
+
+        .menubar {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            margin-bottom: 3rem;
+
+            .d-btn {
+                border: 2px solid getColor(base2);
+                padding: 1rem 3rem;
+                font-size: 2.3rem;
+                font-weight: 700;
+                min-width: 10rem;
+                text-align: center;
+            }
+        }
+
+        .menu__content {
+            display: grid;
+            grid-gap: 1.5rem;
+
+            &-detail {
+                padding: 3rem 3.5rem;
+                border: 2px solid getColor(base2);
+                border-radius: $border-radius;
+
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 3rem;
+
+                p {
+                    display: flex;
+                    align-items: center;
+                    gap: 3rem;
+                }
+
+                .d-btn {
+                    max-width: max-content;
+                    text-align: center;
+                    padding: 1rem 3rem;
+                }
+
+                .tag {
+                    background-color: $clr-primary;
+                    border-radius: $border-radius;
+                    color: $clr-white;
+                    padding: 0.3rem 1.5rem;
+                }
+                .date {
+                    color: $clr-pink;
+                }
+
+                h3 {
+                    color: getColor(text);
+                }
+
+                &:is(:hover, :active, :focus, .active) {
+                    background-color: $clr-darkblue;
+
+                    h3 {
+                        color: rgba(255, 255, 255, 0.47);
+                    }
+
+                    .id {
+                        color: $clr-white;
+                    }
+                    .date {
+                        color: $clr-yellow;
+                    }
+                }
+            }
+        }
+    }
+
+    @media only screen and (max-width: 800px) {
+        position: static;
+        min-height: calc(90vh - $header-size);
+    }
+}

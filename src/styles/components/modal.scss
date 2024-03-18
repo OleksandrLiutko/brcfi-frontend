@@ -1,0 +1,19 @@
+.modal-container {
+    .dark-theme & {
+        .modal-wrapper {
+            background: #1A1D1F;
+
+            .border-color {
+                border-color: #ffffff50;
+            }
+
+            .text-dark {
+                color: white;
+            }
+        }
+    }
+
+    input {
+        color: black;
+    }
+}

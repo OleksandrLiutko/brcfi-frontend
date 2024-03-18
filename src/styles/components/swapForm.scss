@@ -1,0 +1,37 @@
+.swap__form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+
+    .d-btn {
+        margin-top: 2.5rem;
+        font-weight: 700;
+        text-align: center;
+        width: 100%;
+
+        .dark-theme & {
+            background-color: #448AFF;
+        }
+    }
+
+    .swap-position {
+        color: #6F767E;
+        background-color: white;
+
+        .dark-theme & {
+            background-color: #272B30;
+            border-color: #3C4145;
+        }
+    }
+}
+
+.select-item {
+    border: 1px solid #EEF2F5;
+    background-color: white;
+
+    .dark-theme & {
+        border: 1px solid #3C4145;
+        background-color: #272B30;
+    }
+}

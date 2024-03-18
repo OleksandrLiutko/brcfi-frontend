@@ -1,0 +1,233 @@
+.datalist__container {
+    border-radius: $border-radius;
+    background-color: getColor(base1);
+    overflow: hidden;
+    position: absolute;
+    top: 100%;
+    width: 100%;
+    min-width: 200px;
+    z-index: 20;
+    padding: 1rem;
+    margin-top: 0.5rem;
+    left: 0;
+
+    .datalist__input {
+        position: relative;
+        border-bottom: 1px solid getColor(base2);
+
+        img,
+        svg {
+            position: absolute;
+            top: 48%;
+            transform: translateY(-50%);
+            width: 2.2rem;
+            height: 2.2rem;
+        }
+
+        img {
+            left: 1.3rem;
+            width: 2rem;
+            height: 2rem;
+        }
+
+        input {
+            color: #787E82;
+            background-color: #F1F6F9;
+            padding: 1rem 2rem;
+            padding-left: 4rem;
+            border-radius: 10rem;
+            width: 100%;
+            font-size: 12px !important;
+
+            .dark-theme & {
+                background-color: #1A1D1F;
+            }
+
+            &::placeholder {
+                color: #787E82;
+            }
+        }
+
+        svg {
+            right: 0.8rem;
+            fill: inherit;
+        }
+    }
+
+    .datalist__options {
+        max-height: 30rem;
+        padding: 3px;
+        overflow-y: scroll;
+
+        .datalist__option {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.3rem 0.1rem;
+            border-radius: $border-radius;
+            transition: 0.3s;
+            position: relative;
+
+            cursor: pointer;
+
+            img {
+                width: 3rem;
+                height: 3rem;
+                border-radius: 50%;
+            }
+
+            p {
+                font-size: $p-size;
+                font-weight: 700;
+            }
+
+            &:not(:last-child) {
+                margin-bottom: 1rem;
+            }
+
+            &:is(:hover, :active, :focus) {
+                background-color: $clr-primary;
+                color: $clr-white;
+            }
+
+            &.active {
+                color: $clr-primary;
+
+                &::after {
+                    position: absolute;
+                    content: "";
+                    right: 1rem;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    background-color: $clr-primary;
+                    width: 1.5rem;
+                    height: 1.5rem;
+                    border-radius: 50%;
+                }
+            }
+        }
+    }
+}
+
+.networkList__container {
+    .datalist__container {
+        position: fixed;
+        top: 5rem;
+        right: 5rem;
+        width: 100%;
+        max-width: 30rem;
+    }
+}
+
+.walletList__container {
+    .wallet__content {
+        padding: 2rem;
+        padding-bottom: 0;
+        border-radius: $border-radius;
+        background-color: getColor(base1);
+
+        position: fixed;
+        top: 5rem;
+        right: 5rem;
+        // transform: translateX(-50%);
+        width: 100%;
+        max-width: max-content;
+
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 5rem;
+            font-size: 2rem;
+            border-bottom: 1px solid getColor(border);
+            padding-bottom: 1rem;
+
+            h3 {
+                font-size: 2rem !important;
+            }
+        }
+    }
+
+    ul {
+        padding: 0 1rem;
+
+        li {
+            position: relative;
+            padding: 2rem 0;
+            padding-right: 4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 8rem;
+
+            &.active {
+                &::after {
+                    position: absolute;
+                    content: "";
+                    right: 1rem;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    background-color: $clr-primary;
+                    width: 1.5rem;
+                    height: 1.5rem;
+                    border-radius: 50%;
+                }
+
+                h3 {
+                    color: $clr-primary;
+                }
+            }
+
+            h3 {
+                font-size: 2rem !important;
+            }
+
+            p {
+                font-size: 1.4rem !important;
+            }
+
+            h3,
+            p {
+                white-space: nowrap;
+            }
+
+            &:not(:last-child) {
+                border-bottom: 1px solid getColor(border);
+            }
+
+            img {
+                max-width: 8rem;
+                max-height: 6rem;
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 800px) {
+    .networkList__container {
+        .datalist__container {
+            top: 10rem;
+            right: 50%;
+            transform: translateX(50%);
+        }
+    }
+
+    .walletList__container {
+        .wallet__content {
+            top: 10rem;
+            right: 50%;
+            transform: translateX(50%);
+        }
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    .datalist__container {
+        // position: fixed;
+        // top: 10rem;
+        // left: 50%;
+        // transform: translateX(-50%);
+        // width: 100%;
+        max-width: 30rem;
+    }
+}

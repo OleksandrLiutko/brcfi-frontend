@@ -1,0 +1,48 @@
+.swap__container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    padding: 5rem;
+    min-height: 70vh;
+
+    .swap__form {
+        border-radius: $border-radius;
+        padding: 3rem 10rem;
+
+        p {
+            margin-bottom: 0.5rem;
+        }
+
+        .exchange__select {
+            border-color: getColor(text);
+            line-height: 1.2;
+            font-weight: 500;
+        }
+
+        &>svg {
+            fill: $clr-primary !important;
+            stroke: $clr-primary !important;
+        }
+    }
+
+    @media only screen and (max-width: 600px) {
+        padding: 2rem;
+        display: block;
+        min-height: auto;
+        border: none;
+
+        .swap__form {
+            padding: 3rem;
+        }
+    }
+}
+
+.v-bar {
+    background-color: #a5a5a5;
+
+    .dark-theme & {
+        background-color: #3c4145;
+    }
+}

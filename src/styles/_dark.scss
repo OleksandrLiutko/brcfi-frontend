@@ -1,0 +1,137 @@
+// DARK THEME
+.dark-theme {
+
+    .d-btn-primary:disabled,
+    .d-btn-primary.active:disabled,
+    .d-btn:disabled {
+        // border: 1px solid getColor(base2);
+        // color: #c3c2c2 !important;
+        background-color: transparent;
+    }
+
+    .d-btn-grey {
+        background-color: getColor(base2);
+    }
+
+    .dashboard__container {
+        .content {
+            &__detail {
+                .btn {
+                    background-color: #1A1D1F;
+                    color: #fff !important;
+                }
+
+                .btn-active,
+                .btn:is(:hover, :active, :focus) {
+                    background-color: $clr-primary;
+                    color: $clr-white;
+                }
+            }
+        }
+    }
+
+    .card-actions {
+        .id {
+            color: $clr-yellow;
+        }
+    }
+
+    .nft__collection__actions {
+        .filter__group {
+            .select-dropdown {
+                select {
+                    color: #f1e1e1 !important;
+                    border-color: getColor(base2) !important;
+                }
+            }
+        }
+    }
+
+    .nft__upload__container {
+        .upload__content {
+            .btn-group {
+                .d-btn {
+                    border: 2px solid getColor(border);
+                }
+            }
+
+            .info-box {
+                input {
+                    &::placeholder {
+                        color: #fff;
+                    }
+                }
+            }
+
+            input {
+                border: 2px solid getColor(border) !important;
+            }
+
+            textarea {
+                border: 1px solid getColor(border) !important;
+            }
+        }
+    }
+
+    .exchange__select {
+        border-color: getColor(base2);
+
+        button.bordered {
+            border: 2px solid getColor(base2);
+        }
+    }
+
+    .swap__form {
+        &>svg {
+            fill: $clr-white !important;
+            stroke: $clr-white !important;
+        }
+    }
+
+    .setting__wrapper {
+        .setting__menu {}
+    }
+
+    .msg__container {
+        .msg__text {}
+    }
+
+    .loader-animation {}
+
+    .table-btn {
+        &-black {
+            background-color: getColor(base2);
+            color: #777;
+        }
+        &-primary {
+            background-color: #448AFF !important;
+            color: white;
+        }
+    }
+
+    .table-status {
+        &-filled {
+            background-color: getColor(base2);
+        }
+    }
+
+    @media only screen and (max-width: 800px) {
+        .nft__detail-container {
+            background-color: transparent;
+        }
+    }
+
+    @media only screen and (max-width: 700px) {
+        .nft__collection__content {
+            .activity__container {
+                .activity__detail {
+                    .table__item {
+                        span {
+                            color: $clr-yellow;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

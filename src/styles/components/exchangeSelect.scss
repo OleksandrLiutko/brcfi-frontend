@@ -1,0 +1,105 @@
+.exchange__select {
+    border: 1px solid getColor(base2);
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 70px;
+    background: #FFFFFF;
+    border: 1px solid #EEF2F5;
+
+    .dark-theme & {
+        background: #272B30;
+        border: 1px solid #3C4145;
+    }
+
+    .datalist__wrapper {
+        position: relative;
+        // width: 100%;
+    }
+
+    input {
+        font-weight: 400 !important;
+        font-size: 20px !important;
+
+        &::placeholder {
+            color: getColor(text);
+        }
+    }
+
+    .value {
+        font-size: 4rem;
+        font-weight: 600;
+        max-width: calc(100% - 10rem);
+        background: transparent;
+    }
+
+    button {
+        display: flex;
+        align-items: center;
+        text-align: left;
+        font-size: 2rem;
+        border-radius: 10rem;
+        min-width: 15rem;
+        gap: 1rem;
+
+        img {
+            margin-right: auto;
+        }
+    }
+
+    button.bordered {
+        // border: 1px solid $clr-black;
+        border: none !important;
+        font-size: 14px;
+        font-weight: 700;
+        min-width: 0 !important;
+    }
+
+    button.max {
+        border: 1px solid $clr-black;
+    }
+
+    button.filled {
+        // background-color: $clr-yellow;
+        color: $clr-black;
+        padding: 0.7rem 2rem;
+        max-width: 20rem;
+        min-width: 0 !important;
+
+        img {
+            margin-right: initial;
+        }
+
+        svg {
+            margin-left: auto;
+            fill: $clr-black !important;
+        }
+    }
+
+    .submenu {
+        width: 100%;
+    }
+
+    @media only screen and (max-width: 500px) {
+        padding: 1rem;
+
+        .value {
+            max-width: calc(100% - 160px);
+        }
+
+        button.filled {
+            min-width: 130px;
+            width: 130px !important;
+        }
+
+        .datalist__wrapper {
+            width: 130px;
+        }
+    }
+}
+.exchange__select_max_button {
+    border: 1px solid getColor(text);
+    border-radius: 6px;
+}

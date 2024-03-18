@@ -1,0 +1,48 @@
+.pagination__container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .pagenumbers__container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        svg {
+            width: 3rem;
+            height: 3rem;
+        }
+        ul {
+            li {
+                display: inline-block;
+
+                &:not(:last-child) {
+                    margin-right: 1rem;
+                }
+
+                button {
+                    font-size: 1.8rem;
+                    background: getColor(base2);
+                    color: getColor(text);
+                    padding: 0rem 1rem;
+                    border-radius: 5px;
+
+                    &:is(:hover, :active, :focus, .active) {
+                        background-color: $clr-primary;
+                        color: $clr-white !important;
+                    }
+                }
+            }
+        }
+    }
+
+    .list-limit select {
+        background-color: getColor(base);
+        padding: 1rem;
+        color: #5b667c;
+    }
+
+    @media only screen and (max-width: 800px) {
+        justify-content: center;
+    }
+}

@@ -1,0 +1,189 @@
+.nft__detail-container {
+    padding: 3rem;
+    background-color: #eee;
+
+    .info__container {
+        display: grid;
+        grid-template-columns: 0.9fr 1.1fr;
+        grid-gap: 2rem;
+        margin-bottom: 3rem;
+
+        figure {
+            border-radius: $border-radius;
+            overflow: hidden;
+            img {
+                height: 100%;
+                object-fit: cover;
+            }
+        }
+
+        .info {
+            padding: 4rem;
+            border-radius: $border-radius;
+            background-color: getColor(base1);
+            .ordinal-value {
+                margin: 2rem 0;
+                color: $clr-primary;
+                font-size: $h3-size !important;
+                font-weight: 700 !important;
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+
+                img {
+                    transform: translateY(-3px);
+                }
+            }
+
+            .btn-actions {
+                margin-bottom: 3rem;
+                .d-btn {
+                    width: max-content;
+                    padding: 1.2rem 3rem;
+                    font-weight: 700;
+                    &-secondary {
+                        color: $clr-black;
+                    }
+                }
+            }
+
+            .tab-group {
+                margin-bottom: 2rem;
+                display: flex;
+                gap: 2rem;
+
+                .d-btn {
+                    border-radius: 0;
+                    padding: 1rem 2rem;
+                    &:is(:hover, :active, .active) {
+                        border-bottom: 2px solid $clr-primary;
+                    }
+                }
+            }
+
+            .info__content {
+                h4 {
+                    font-size: $p-size;
+                    font-weight: 700;
+                }
+                ul {
+                    margin-top: 2rem;
+                    display: flex;
+                    align-items: center;
+                    gap: 1rem;
+                }
+            }
+
+            .activity__content {
+                .menu {
+                    a {
+                        padding-left: 2rem;
+                        padding-right: 2rem;
+                        font-size: $p-size;
+                        background-color: getColor(text);
+                        color: getColor(base);
+                        text-align: center;
+                        border-radius: 10rem;
+                        svg {
+                            fill: getColor(base) !important;
+                        }
+                    }
+
+                    .submenu {
+                        z-index: 10;
+                    }
+                }
+
+                .events__list {
+                    margin-top: 2rem;
+                    display: grid;
+                    grid-gap: 2rem;
+                    li {
+                        display: flex;
+                        justify-content: space-between;
+                        div:first-child {
+                            display: grid;
+
+                            h4 {
+                                display: inline-grid;
+                                grid-template-columns: max-content 1fr;
+                                grid-gap: 1.6rem;
+
+                                font-size: 1.5rem;
+                                font-weight: 700;
+                                margin-bottom: 1rem;
+                                img {
+                                    width: 2.1rem;
+                                }
+                            }
+                            div {
+                                font-size: 1.5rem !important;
+
+                                img {
+                                    transform: translateY(-2px);
+                                    width: 2rem;
+                                }
+                                p {
+                                    transform: translateX(-3px);
+                                    margin-top: 0.5rem;
+                                    display: flex;
+                                    gap: 0.5rem;
+                                }
+                            }
+                        }
+                        div:last-child {
+                            P:first-child {
+                                font-size: 1.5rem !important;
+                            }
+                            P:last-child {
+                                font-size: 1.3rem !important;
+                                text-align: right;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .detail__container {
+        ul {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        li {
+            background-color: getColor(base2);
+            border-radius: 5px;
+            padding: 1rem 2.5rem;
+            font-size: 1.8rem;
+            .label {
+                font-weight: 400;
+            }
+            .value {
+                font-weight: 700;
+            }
+        }
+    }
+
+    @media only screen and (max-width: 800px) {
+        .info__container {
+            grid-template-columns: 1fr;
+            justify-items: center;
+
+            figure {
+                max-height: 45rem;
+                aspect-ratio: 3 / 4;
+
+                img {
+                    height: auto;
+                    object-fit: cover;
+                }
+            }
+
+            .info {
+                width: 100%;
+            }
+        }
+    }
+}

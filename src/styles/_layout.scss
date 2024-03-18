@@ -1,0 +1,54 @@
+.main__container {
+    margin-bottom: 10rem;
+
+    display: grid;
+    grid-template-columns: 312px 1fr;
+
+    // background-color: getColor(backgroundDim);
+
+    @media only screen and (max-width: 1280px) {
+        grid-template-columns: max-content 1fr;
+    }
+    @media only screen and (max-width: 800px) {
+        grid-template-columns: 1fr;
+        place-items: center;
+    }
+    @media only screen and (max-width: 500px) {
+        background-image: none !important;
+        padding: 0;
+    }
+}
+
+.main__content {
+    position: relative;
+    min-height: calc(100% - 13rem);
+    border: none;
+    height: max-content;
+    width: 100%;
+    overflow-x: scroll;
+
+    /* Target the scrollbar */
+    &::-webkit-scrollbar {
+        width: 0px; /* Adjust the width of the scrollbar */
+        height: 0px; /* Adjust the height of the scrollbar */
+    }
+
+    // /* Track */
+    // &::-webkit-scrollbar-thumb,
+    // &::-webkit-scrollbar-track {
+    //     background-color: transparent; /* Set the background color of the track */
+    // }
+
+    // /* Handle */
+    // &::-webkit-scrollbar-thumb {
+    //     background-color: $clr-primary; /* Set the color of the scrollbar handle */
+    //     border-radius: 10rem;
+    // }
+
+    @media only screen and (max-width: 800px) {
+        margin: 1rem;
+    }
+    // @media only screen and (max-width: 800px) {
+    //     margin: 1rem;
+    // }
+}

@@ -1,0 +1,45 @@
+@import "variables";
+@import "base";
+@import "utils";
+
+// COMPONENTS
+@import "./components/Header.scss";
+@import "./components/aside.scss";
+@import "./components/exchangeSelect.scss";
+@import "./components/swapForm.scss";
+@import "./components/dataTable.scss";
+@import "./components/nftItem.scss";
+@import "./components/pagination.scss";
+@import "./components/dataList.scss";
+@import "./components/notification.scss";
+@import "./components/modalContainer.scss";
+@import "./components/filters.scss";
+
+// PAGES
+@import "./pages/dashboard.scss";
+@import "./pages/exchange.scss";
+@import "./pages/pool.scss";
+@import "./pages/swap.scss";
+@import "./pages/dao.scss";
+@import "./pages/nft.scss";
+@import "./pages/nftDetail.scss";
+@import "./pages/nftCollection.scss";
+@import "./pages/nftUpload.scss";
+@import "./pages/bridge.scss";
+
+// LAYOUT
+@import "layout";
+
+// DARK VERSION
+@import "dark";
+
+.body__container {
+    background-position: top;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-image: url(../assets/images/bg-light.png);
+
+    &.dark-theme {
+        background: #111315;
+    }
+}
