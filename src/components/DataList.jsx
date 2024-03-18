@@ -43,7 +43,7 @@ function DataList({
         if (value.length <= 4) {
             setKeyword(value);
             setFilteredOptions(
-                options.filter((option) => option.tick.toLowerCase().includes(value.toLowerCase()))
+                options.filter((option) => option.ticker.toLowerCase().includes(value.toLowerCase()))
             );
         } else if (value == '' || value.length == 0) {
             setFilteredOptions(options.slice(0, 100));
@@ -64,7 +64,7 @@ function DataList({
     useOutsideAlerter(inputRef, show, handleBlur)
 
     const handleQuick = (quick_tick) => {
-        let option = filteredOptions.find((option) => option.tick.toLowerCase() === quick_tick);
+        let option = filteredOptions.find((option) => option.ticker.toLowerCase() === quick_tick);
         if (option != null && option.length > 0) {
             setSelectedOption(option[0])
         }
@@ -115,17 +115,17 @@ function DataList({
                             <>
                                 <div className="flex justify-between w-[100%]">
                                     <div className="flex" style={{alignItems: "center"}}>
-                                        <img src={option.tick === 'BTC' ? btcIcon : option.tick.toLowerCase() === 'bzfi'? brcfiIcon : (() => {
-                                            const selectedItem = appContext?.tokenDataList?.filter(item => item.symbol.toLowerCase() === option.tick.toLowerCase());
+                                        <img src={option.ticker === 'BTC' ? btcIcon : option.ticker.toLowerCase() === 'bzfi'? brcfiIcon : (() => {
+                                            const selectedItem = appContext?.tokenDataList?.filter(item => item.symbol.toLowerCase() === option.ticker.toLowerCase());
                                             if (selectedItem && selectedItem.length > 0) {
                                                 return selectedItem[0].iconUrl + "?size=30x30";
                                             }
                                             return ordinalIcon;
                                             })()} alt={option.value} />
-                                        <p className="px-[3px]">{option.tick}</p>
+                                        <p className="px-[3px]">{option.ticker}</p>
                                     </div>
                                     <div className="flex" style={{alignItems: "center"}}>
-                                        <p>{option.tick == "BTC" ? option.balance.toFixed(4) : option.balance.toFixed(1)}</p>
+                                        <p>{option.ticker == "BTC" ? option.balance.toFixed(4) : option.balance.toFixed(1)}</p>
                                     </div>                   
                                 </div>
                             </>

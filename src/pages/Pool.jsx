@@ -9,7 +9,7 @@ import { useAuthState } from "../context/AuthContext";
 import { useModalState } from "../context/ModalContext";
 import ReactPortal from "../components/ReactPortal";
 import { useToast } from "../hooks/useToast";
-import { createPoolApi } from "../utils/apiRoutes";
+import { createPoolApi, createPoolFeeApi, } from "../utils/apiRoutes";
 import axios from "axios";
 import { fakeOrderList } from "../utils/fakeData";
 import { createColumnHelper } from "@tanstack/react-table";
@@ -63,7 +63,7 @@ function Pool() {
     const { messageApi } = useToast();
     const { unisatContext, appContext } = useAuthState();
     const { unisatWallet, connected, setUnisatInstalled, address, network, balance, connectWallet, checkConnect } = unisatContext;
-    const { factoryWallet, calculateFee, tokenList, tokenSelectList, tokenOne, tokenTwo, setTokenOne, setTokenTwo, orderList, loadOrderList, currentPool, whiteist, tokenDataList } = appContext;
+    const { factoryWallet, tokenList, tokenSelectList, tokenOne, tokenTwo, setTokenOne, setTokenTwo, orderList, loadOrderList, currentPool, whiteist, tokenDataList } = appContext;
 
     const [lPTokenTick, setLPTokenTick] = useState('');
     const [lPMax, setLPMax] = useState('');
@@ -74,6 +74,8 @@ function Pool() {
     const [hint, setHint] = useState('LP Token to Deploy');
     const [showFeeReteModal, setShowFeeRateModal] = useState(false);
     const [feeRate, setFeeRate] = useState(1);
+    const [fee, setFee] = useState(0);
+
     useEffect(() => {
         closeModal();
         return async () => {
@@ -81,6 +83,13 @@ function Pool() {
             await sleep(0.1);
         }
     }, [])
+
+    useEffect(() => {
+        axios.get(`${createPoolFeeApi}?fee_rate=${feeRate}`)
+            .then(({ data }) => {
+                setFee(data.data)
+            })
+    }, [feeRate]);
 
     useEffect(() => {
 
@@ -119,17 +128,17 @@ function Pool() {
         }
         try {
             const closer = messageApi.notifyWarning(
-                `Ordering new liquidity pool for ${tokenOne.tick.toUpperCase()}/${tokenTwo.tick.toUpperCase()}`,
+                `Ordering new liquidity pool for ${tokenOne.ticker.toUpperCase()}/${tokenTwo.ticker.toUpperCase()}`,
                 6
             );
 
-            const tx_id = await unisatWallet.sendBitcoin(factoryWallet, calculateFee(feeRate).create_pool_fee);
+            const tx_id = await unisatWallet.sendBitcoin(factoryWallet, fee);
             const body = {
                 sender_address: address,
                 fee_txid: tx_id,
                 fee_rate: feeRate,
-                token1: tokenOne.tick,
-                token2: tokenTwo.tick,
+                token1: tokenOne.ticker,
+                token2: tokenTwo.ticker,
                 lp_token: lPTokenTick,
                 lp_token_max_supply: Number(lPMax),
             }
@@ -141,17 +150,17 @@ function Pool() {
                 data: body,
             });
             // console.log('createPool', data);
-            if (data.status == 'success') {
+            if (data.status == 'ok') {
                 closer();
                 messageApi.notifySuccess('Create pool order is successfully listed!', 5)
                 await loadOrderList();
                 await sleep(1);
             }
             else {
-                messageApi.notifyFailed('Faile!' + data.message)
+                messageApi.notifyFailed('Failed!' + data.message)
             }
         } catch (error) {
-            console.log(error);
+            console.error(error);
             messageApi.notifyFailed('User canceled order')
         }
         setIsLoading(false);
@@ -171,10 +180,10 @@ function Pool() {
         }
         
         if (lPTokenTick.length < 4) {
-            messageApi.notifyWarning('Please input LP token tick.');
+            messageApi.notifyWarning('Please input LP token ticker.');
             return;
         }
-        if (tokenList.find((token) => token.tick.toUpperCase() === lPTokenTick.toUpperCase())) {
+        if (tokenList.find((token) => token.ticker.toUpperCase() === lPTokenTick.toUpperCase())) {
             messageApi.notifyWarning(`${lPTokenTick} was already deployed`);
             return;
         }
@@ -233,7 +242,7 @@ function Pool() {
         {modalState.open && (
             <ReactPortal>
                 <section className="modal__content">
-                    <h2>Are you sure to create a new pool for {tokenOne?.tick}/{tokenTwo.tick} with a service fee of {calculateFee(feeRate).create_pool_fee / 1e8} BTC?</h2>
+                    <h2>Are you sure to create a new pool for {tokenOne?.ticker}/{tokenTwo?.ticker} with a service fee of {fee / 1e8} BTC?</h2>
 
                     <div className="btn-group">
                         <button className="d-btn d-btn-primary active" onClick={handleCreatePool}>

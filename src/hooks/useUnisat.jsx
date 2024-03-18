@@ -41,23 +41,4 @@ export function useUnisat() {
     })
   }
 
-  const connectWallet = async () => {
-    if (!unisat) {
-      messageApi.notifyWarning('Please install Unisat wallet!', 3)
-      return;
-    }
-    const connect = await checkConnect();
-    if (!connect) return;
-    try {
-      const result = await unisat.requestAccounts();
-      await unisat.switchNetwork('livenet')
-      handleAccountsChanged(result);
-      setConnected(true);
-      messageApi.notifySuccess('Wallet is connected!', 3)
-    } catch (error) {
-
-    }
-  }
-
-
 }

@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react'
 import axios from 'axios';
 
-import { poolListApi } from '../utils/apiRoutes';
+import { getPoolByTokenPairApi } from '../utils/apiRoutes';
 
 
 export default function useGetPool(tokenOne, tokenTwo) {
@@ -17,11 +17,9 @@ export default function useGetPool(tokenOne, tokenTwo) {
     const fetchData = async () => {
       try {
         setLoading(true)
-        // console.log('tokenPair :>> ', poolListApi + tokenPair[0].tick + '/' + tokenPair[1].tick);
-        const { data } = await axios.get(poolListApi + tokenPair[0].tick + '/' + tokenPair[1].tick)
-        if (componentMounted && data.status == 'success') {
+        const { data } = await axios.get(`${getPoolByTokenPairApi}?token1=${tokenPair[0].ticker}&token2=${tokenPair[1].ticker}`)
+        if (componentMounted && data.status == 'ok') {
           setCurrentPool(data.data)
-          // console.log("pooldata", data.data)
           return;
         }
         setCurrentPool(null);

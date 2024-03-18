@@ -12,7 +12,7 @@ import { ORDER_STATUS_LISTED, formatOrderStatus, formatTime } from "../utils/con
 import { createColumnHelper } from "@tanstack/react-table";
 import { useModalState } from "../context/ModalContext";
 import ReactPortal from "./ReactPortal";
-import { addLiquidityApi, feeRateUrl, removeLiquidityApi } from "../utils/apiRoutes";
+import { addLiquidityApi, feeRateUrl, removeLiquidityApi, removeLiquidityFeeApi } from "../utils/apiRoutes";
 import axios from "axios";
 import { Tooltip } from "react-tooltip";
 import TooltipComp from "./customComponents/Tooltip";
@@ -28,7 +28,7 @@ function ExchageRemoveLiquidity() {
     const { messageApi } = useToast();
     const { unisatContext, appContext } = useAuthState();
     const { unisatWallet, connected, setUnisatInstalled, address, network, balance, connectWallet, checkConnect } = unisatContext;
-    const { factoryWallet, poolList, tokenSelectList, tokenOne, tokenTwo, setTokenOne, setTokenTwo, orderList, loadOrderList, currentPool, calculateFee, tokenDataList } = appContext;
+    const { factoryWallet, poolList, tokenSelectList, tokenOne, tokenTwo, setTokenOne, setTokenTwo, orderList, loadOrderList, currentPool, tokenDataList } = appContext;
 
     const [tokenOneAmount, setTokenOneAmount] = useState('');
     const [tokenTwoAmount, setTokenTwoAmount] = useState('');
@@ -38,12 +38,17 @@ function ExchageRemoveLiquidity() {
     const [result, getResult] = useTokenOneAndTwo(lPAmount, tokenOne, tokenTwo, lPToken);
     const [showFeeReteModal, setShowFeeRateModal] = useState(false);
     const [feeRate, setFeeRate] = useState(1);
+    const [fee, setFee] = useState(0)
     useEffect(() => {
-    }, [result, lPAmount])
+        axios.get(`${removeLiquidityFeeApi}?fee_rate=${feeRate}`)
+            .then(({ data }) => {
+                setFee(data.data)
+            })
+    }, [feeRate])
 
     const [lpTokenList, setLpTokenList] = useState(poolList.map((pool) => {
         return {
-          tick: pool.lp_token,
+            ticker: pool.lp_token,
           token1: pool.token1,
           token2: pool.token2,
           address: pool.address,
@@ -54,14 +59,15 @@ function ExchageRemoveLiquidity() {
     useEffect(() => {
         setLpTokenList(poolList.map((pool) => {
             return {
-              tick: pool.lp_token,
+                ticker: pool.lp_token,
               token1: pool.token1,
               token2: pool.token2,
               address: pool.address,
               balance: pool.balance
             }
         })
-    )},[poolList])
+        )
+    }, [poolList])
     
     useEffect(() => {
         setLPToken(lpTokenList[0])
@@ -216,17 +222,17 @@ function ExchageRemoveLiquidity() {
         if (!walletCheck) return;
         try {
             messageApi.notifyWarning(
-                `Ordering remove liquidity pool for ${tokenOne.tick}/${tokenTwo.tick}`,
+                `Ordering remove liquidity pool for ${tokenOne.ticker}/${tokenTwo.ticker}`,
                 6
             );
-            const tx_id = await unisatWallet.sendBitcoin(factoryWallet, calculateFee(feeRate).remove_liquidity_fee);
+            const tx_id = await unisatWallet.sendBitcoin(factoryWallet, fee);
             const body = {
                 sender_address: address,
                 fee_txid: tx_id,
                 fee_rate: feeRate,
-                token1: tokenOne.tick,
-                token2: tokenTwo.tick,
-                lp_token: lPToken.tick,
+                token1: tokenOne.ticker,
+                token2: tokenTwo.ticker,
+                lp_token: lPToken.ticker,
                 lp_token_amount: Number(lPAmount),
             }
             const { data } = await axios({
@@ -235,7 +241,7 @@ function ExchageRemoveLiquidity() {
                 withCredentials: false,
                 data: body,
             });
-            if (data.status == 'success') {
+            if (data.status == 'ok') {
                 messageApi.notifySuccess('Remove liqudity order is successfully listed!')
                 await loadOrderList();
             }
@@ -243,7 +249,7 @@ function ExchageRemoveLiquidity() {
                 messageApi.notifyFailed('Remove liqudity order was failed!')
             }
         } catch (error) {
-            console.log(error);
+            console.error(error);
             messageApi.notifyFailed('User canceled order.')
         }
         setIsLoading(false);
@@ -285,7 +291,7 @@ function ExchageRemoveLiquidity() {
             {modalState.open && (
                 <ReactPortal>
                     <section className="modal__content">
-                        <h2>Are you sure to remove liquidity for {tokenOne?.tick}/{tokenTwo?.tick} with a service fee of {calculateFee(feeRate).remove_liquidity_fee / 1e8} BTC?</h2>
+                        <h2>Are you sure to remove liquidity for {tokenOne?.ticker}/{tokenTwo?.ticker} with a service fee of {fee / 1e8} BTC?</h2>
 
                         <div className="btn-group">
                             <button className="d-btn d-btn-primary active" onClick={handleRemoveLiquidity}>
@@ -355,7 +361,7 @@ function ExchageRemoveLiquidity() {
                         </g>
                     </svg>
                     <ExchangeSelect
-                        amount={result ? tokenOne.tick == "BTC" ? (result.token_amount1 / 1e8).toFixed(8):  result.token_amount1 : ''}
+                        amount={result ? tokenOne.ticker == "BTC" ? (result.token_amount1 / 1e8).toFixed(8) : result.token_amount1 : ''}
                         setAmount={setTokenOneAmount}
                         token={tokenOne}
                         setToken={setTokenOne}
@@ -369,7 +375,7 @@ function ExchageRemoveLiquidity() {
                     />
 
                     <ExchangeSelect
-                        amount={result ? tokenTwo.tick == "BTC" ? (result.token_amount2 / 1e8).toFixed(8):  result.token_amount2 : ''}
+                        amount={result ? tokenTwo.ticker == "BTC" ? (result.token_amount2 / 1e8).toFixed(8) : result.token_amount2 : ''}
                         setAmount={setTokenTwoAmount}
                         token={tokenTwo}
                         setToken={setTokenTwo}

@@ -6,12 +6,11 @@ import { hex, base64 } from "@scure/base";
 
 import { useToast } from "../hooks/useToast";
 import useFetch from "../hooks/useFetch";
-import { getMyOrderListApi, getRewardsApi, tokenDataListApi, tokenListApi } from "../utils/apiRoutes";
+import { getMyOrderListApi, tokenDataListApi } from "../utils/apiRoutes";
 import { defaultToken } from "../utils/constants";
 import { useTokenSelect } from "../hooks/useTokenSelect";
 import { useLoadData } from "../hooks/useLoadData";
 import useGetPool from "../hooks/useGetPool";
-import { useFeeWeight } from "../hooks/useFeeWeight";
 import xverse from "../assets/images/xverse.png"
 import unisat from "../assets/images/unisat.png"
 import axios from "axios";
@@ -103,14 +102,14 @@ export function AuthStateProvider({ children }) {
     unconfirmed: 0,
     total: 0,
   });
-  const [network, setNetwork] = useState("livenet");
+  const [network, setNetwork] = useState("testnet");
 
-  const [tokenList, tokenSelectList, poolTokenLists, tokenOne, tokenTwo, setTokenOne, setTokenTwo] = useTokenSelect(address);
-  const [factoryWallet, poolList, whiteist] = useLoadData(address);
+  const [tokenList, tokenSelectList, poolTokenLists, tokenBalances, tokenOne, tokenTwo, setTokenOne, setTokenTwo] = useTokenSelect(address);
+  const [factoryWallet, poolList] = useLoadData(address);
   const [orderList, fetchOrderList] = useFetch(`${getMyOrderListApi}?address=${address}`)
   // const [rewardsData, fetchRewardsData] = useFetch(getRewardsApi(address));
   const [setTokenPair, currentPool, currentPoolLoading, error,] = useGetPool(tokenOne, tokenTwo);
-  const [feeWeightList, fetchWeightList, calculateFee] = useFeeWeight();
+
   const checkConnect = async () => {
     return new Promise(async (res, rej) => {
 
@@ -147,7 +146,7 @@ export function AuthStateProvider({ children }) {
     if (!connect) return;
     try {
         const result = await window.unisat.requestAccounts();
-        await window.unisat.switchNetwork('livenet')
+        await window.unisat.switchNetwork('testnet')
         handleAccountsChanged(result);
         setConnected(true);
         messageApi.notifySuccess('Wallet is connected!', 3)
@@ -194,7 +193,7 @@ export function AuthStateProvider({ children }) {
     if (!connect) return;
     try {
       const result = await window.unisat.requestAccounts();
-      await window.unisat.switchNetwork('livenet')
+      await window.unisat.switchNetwork('testnet')
       handleAccountsChanged(result);
       setConnected(true);
       messageApi.notifySuccess('Wallet is connected!', 3)
@@ -347,8 +346,6 @@ export function AuthStateProvider({ children }) {
         },
         appContext: {
           factoryWallet,
-          fetchWeightList,
-          calculateFee,
           poolList, //static data for app
           tokenList,
           tokenSelectList,

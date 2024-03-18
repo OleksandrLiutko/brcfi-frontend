@@ -12,7 +12,7 @@ import { ORDER_STATUS_LISTED, formatOrderStatus, formatTime, sleep } from "../ut
 import { createColumnHelper } from "@tanstack/react-table";
 import { useModalState } from "../context/ModalContext";
 import ReactPortal from "./ReactPortal";
-import { BTCTestExplorerUrl, addLiquidityApi, feeRateUrl, getTXInfoUrl, updateOrderApi } from "../utils/apiRoutes";
+import { BTCTestExplorerUrl, addLiquidityApi, feeRateUrl, getTXInfoUrl, updateOrderApi, addLiquidityFeeApi } from "../utils/apiRoutes";
 import axios from "axios";
 import { Tooltip } from "react-tooltip";
 import TooltipComp from "./customComponents/Tooltip";
@@ -29,7 +29,7 @@ function ExchangeAddLiquidity() {
     const { messageApi } = useToast();
     const { unisatContext, appContext } = useAuthState();
     const { unisatWallet, connected, setUnisatInstalled, address, network, balance, connectWallet, checkConnect } = unisatContext;
-    const { factoryWallet, poolList, tokenSelectList, tokenDataList, tokenOne, tokenTwo, setTokenOne, setTokenTwo, orderList, loadOrderList, currentPool, fetchWeightList, calculateFee } = appContext;
+    const { factoryWallet, poolList, tokenSelectList, tokenDataList, tokenOne, tokenTwo, setTokenOne, setTokenTwo, orderList, loadOrderList, currentPool, fetchWeightList } = appContext;
 
     const [tokenOneAmount, setTokenOneAmount] = useState('');
     const [tokenTwoAmount, setTokenTwoAmount] = useState('');
@@ -37,13 +37,18 @@ function ExchangeAddLiquidity() {
     const { modalState, openModal, closeModal } = useModalState();
     const [isLoading, setIsLoading] = useState(false);
     const [result, getResult] = useLPAmount(tokenOne, tokenTwo, tokenOneAmount, tokenTwoAmount, currentPool)
-    // const [fee, setFee] = useState(0);
+
     const [posChange, setPosChange] = useState(false);
     const [hint, setHint] = useState('')
     const [showFeeReteModal, setShowFeeRateModal] = useState(false);
     const [feeRate, setFeeRate] = useState(1);
+    const [fee, setFee] = useState(0);
     useEffect(() => {
-    }, []);
+        axios.get(`${addLiquidityFeeApi}?fee_rate=${feeRate}`)
+            .then(({ data }) => {
+                setFee(data.data)
+            })
+    }, [feeRate]);
 
     const TokenSend = ({ record, id }) => {
         const [isConfirmed, setIsConfirmed] = useState(false);
@@ -223,9 +228,9 @@ function ExchangeAddLiquidity() {
         setTokenOneAmount(value)
         if (currentPool && currentPool.balance2 > 0) {
             let mul = 1;
-            if (tokenOne.tick == "BTC") {
+            if (tokenOne.ticker == "BTC") {
                 mul = 1e8;
-            } else if(tokenTwo.tick === "BTC") {
+            } else if (tokenTwo.ticker === "BTC") {
                 mul = 1e-8
             }
             const predictIncome = currentPool.balance2 * value * mul / currentPool.balance1;
@@ -252,19 +257,19 @@ function ExchangeAddLiquidity() {
         }
         try {
             messageApi.notifyWarning(
-                `Ordering add liquidity pool for ${tokenOne.tick.toUpperCase()}/${tokenTwo.tick.toUpperCase()} ${calculateFee(feeRate).add_liquidity_fee / 1e8}`,
+                `Ordering add liquidity pool for ${tokenOne.ticker.toUpperCase()}/${tokenTwo.ticker.toUpperCase()} ${fee / 1e8}`,
                 6
             );
-            const tx_id = await unisatWallet.sendBitcoin(factoryWallet, calculateFee(feeRate).add_liquidity_fee);
+            const tx_id = await unisatWallet.sendBitcoin(factoryWallet, fee, { feeRate });
             const body = {
                 sender_address: address,
                 fee_txid: tx_id,
                 fee_rate: feeRate,
-                token1: tokenOne.tick,
-                token2: tokenTwo.tick,
+                token1: tokenOne.ticker,
+                token2: tokenTwo.ticker,
                 lp_token: currentPool.lp_token,
-                token_amount1: tokenOne.tick == "BTC" ? Math.round(Number(tokenOneAmount * 1e8)) : Number(tokenOneAmount),
-                token_amount2: tokenTwo.tick == "BTC" ? Math.round(Number(tokenTwoAmount * 1e8)) : Number(tokenTwoAmount),
+                token_amount1: tokenOne.ticker == "BTC" ? Math.round(Number(tokenOneAmount * 1e8)) : Number(tokenOneAmount),
+                token_amount2: tokenTwo.ticker == "BTC" ? Math.round(Number(tokenTwoAmount * 1e8)) : Number(tokenTwoAmount),
             }
             // console.log('window.unisat :>> ', body);
             const { data } = await axios({
@@ -274,7 +279,7 @@ function ExchangeAddLiquidity() {
                 data: body,
             });
             // console.log('Add liqudity', data);
-            if (data.status == 'success') {
+            if (data.status == 'ok') {
                 messageApi.notifySuccess('Add liqudity order is successfully listed!')
                 await loadOrderList();
             }
@@ -282,7 +287,7 @@ function ExchangeAddLiquidity() {
                 messageApi.notifyFailed('Add liqudity order was failed!')
             }
         } catch (error) {
-            console.log(error);
+            console.error(error);
             messageApi.notifyFailed('User canceled order.')
         }
         setIsLoading(false);
@@ -335,7 +340,7 @@ function ExchangeAddLiquidity() {
                 <ReactPortal>
                     <section className="modal__content">
                         <h2>
-                            {`Are you sure to add liquidity ${tokenOne?.tick}(${tokenOneAmount})/${tokenTwo?.tick}(${tokenTwoAmount}) with a service fee of ${calculateFee(feeRate).add_liquidity_fee / 1e8} BTC?`}
+                            {`Are you sure to add liquidity ${tokenOne?.ticker}(${tokenOneAmount})/${tokenTwo?.ticker}(${tokenTwoAmount}) with a service fee of ${fee / 1e8} BTC?`}
                         </h2>
 
                         <div className="btn-group">
@@ -382,7 +387,7 @@ function ExchangeAddLiquidity() {
                         />
                     }
                     <ExchangeSelectToken
-                        amount={result ? tokenTwo.tick == 'BTC' ? (result.out_token_amount / 1e8).toFixed(8) : result.out_token_amount : ''}
+                        amount={result ? tokenTwo.ticker == 'BTC' ? (result.out_token_amount / 1e8).toFixed(8) : result.out_token_amount : ''}
                         setAmount={setTokenTwoAmount}
                         token={posChange? tokenOne : tokenTwo}
                         setToken={posChange? setTokenOne: setTokenTwo}
@@ -454,7 +459,7 @@ function ExchangeAddLiquidity() {
                     {/* <ExchangeSelect
                         amount={result ? result.lp_token_amount : ''}
                         setAmount={setLPAmount}
-                        token={{ tick: currentPool ? currentPool.lp_token : 'No pool' }}
+                        token={{ ticker: currentPool ? currentPool.lp_token : 'No pool' }}
                         setToken={setTokenTwo}
                         list={tokenSelectList[1]}
                         selectText={currentPool ? currentPool.lp_token : 'No pool'}

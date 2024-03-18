@@ -157,7 +157,7 @@ function Reward() {
                 data: body,
             });
             // console.log('withdraw_response', data);
-            if (data.status == 'success') {
+            if (data.status == 'ok') {
                 messageApi.notifySuccess('Withdraw order is successfully listed!')
                 await loadOrderList();
             }
@@ -165,7 +165,7 @@ function Reward() {
                 messageApi.notifyFailed('Withdraw order was failed!')
             }
         } catch (error) {
-            console.log(error);
+            console.error(error);
             messageApi.notifyFailed('User canceled order')
         }
         setIsLoading(false);

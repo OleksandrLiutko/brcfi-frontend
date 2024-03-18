@@ -11,13 +11,13 @@ function ExchangeSelect({ amount, setAmount, token, setToken, list, tokenDataLis
     const isMobileView_500 = useResponsiveView(500);
     const { addModal, removeModal } = useModalState();
     const [toggleDataList, setToggleDataList] = useState(false);
-    const [selectedOption, setSelectedOption] = useState(token ? token : { tick: selectText, icon: ordinalIcon });
+    const [selectedOption, setSelectedOption] = useState(token ? token : { ticker: selectText, icon: ordinalIcon });
     const [balance, setBalance] = useState(0)
 
 
     useEffect(() => {
         if (!token)
-            setSelectedOption({ tick: selectText, icon: ordinalIcon, balance: 0 })
+            setSelectedOption({ ticker: selectText, icon: ordinalIcon, balance: 0 })
         else setSelectedOption(token)
     }, [token])
 
@@ -51,7 +51,7 @@ function ExchangeSelect({ amount, setAmount, token, setToken, list, tokenDataLis
         let value = e.target.value;
         if (value == '' || isNumber.test(value)) {
             if (value >= 21000000) value = '21000000';
-            if (token.tick == "BTC" && value < 1e-7 && value > 0) value = '0.00000001';
+            if (token.ticker == "BTC" && value < 1e-7 && value > 0) value = '0.00000001';
             setAmount(value);
         }
     }
@@ -73,15 +73,15 @@ function ExchangeSelect({ amount, setAmount, token, setToken, list, tokenDataLis
                         disabled={disabled}
                         onClick={handleToggleDataList}
                     >
-                        <img src={selectedOption.tick == 'BTC' ? btcIcon : selectedOption?.tick.toLowerCase() === 'bzfi'? brcfiIcon: (() => {
-                            const selectedItem = tokenDataList?.filter(item => item.symbol.toLowerCase() === selectedOption.tick.toLowerCase());
+                        <img src={selectedOption.ticker == 'BTC' ? btcIcon : selectedOption?.ticker.toLowerCase() === 'bzfi'? brcfiIcon: (() => {
+                            const selectedItem = tokenDataList?.filter(item => item.symbol.toLowerCase() === selectedOption.ticker.toLowerCase());
                             if (selectedItem && selectedItem.length > 0) {
                                 // console.log(selectedItem)
                                 return selectedItem[0].iconUrl + "?size=30x30";
                             }
                             return ordinalIcon;
                         })()} alt="" className="icon" style={{borderRadius: "50%"}} />
-                        {selectedOption.tick}
+                        {selectedOption.ticker}
                         {/* {!disabled && <svg
                             className="fill-current"
                             xmlns="http://www.w3.org/2000/svg"

@@ -12,7 +12,6 @@ import ReactPortal from "./ReactPortal";
 import Filters from "./Filters";
 import { useAuthState } from "../context/AuthContext";
 import { useToast } from "../hooks/useToast";
-import { fakeOrderList } from "../utils/fakeData";
 import { formatOrderStatus, formatTime } from "../utils/constants";
 import { createColumnHelper } from "@tanstack/react-table";
 import axios from "axios";
@@ -23,7 +22,7 @@ import SwapIcon from "../assets/icons/swap.svg"
 const columnHelper = createColumnHelper();
 
 import { useResponsiveView } from "../utils/customHooks";
-import { feeRateUrl, swapApi } from "../utils/apiRoutes";
+import { feeRateUrl, swapApi, swapFeeApi } from "../utils/apiRoutes";
 import useTokenTwoAmount from "../hooks/useTokenTwoAmount";
 import OrderStatus from "./customComponents/OrderStatus";
 import BlockScan from "./customComponents/BlockScan";
@@ -40,7 +39,7 @@ function ExchangeSwap() {
   const {
     factoryWallet, poolList, poolTokenLists,
     tokenOne, tokenTwo, setTokenOne, setTokenTwo,
-    orderList, loadOrderList, currentPool, currentPoolLoading, calculateFee, tokenDataList
+    orderList, loadOrderList, currentPool, currentPoolLoading, tokenDataList
   }
     = appContext;
 
@@ -50,13 +49,20 @@ function ExchangeSwap() {
   const [toggleSetting, setToggleSetting] = useState(false);
   const [percentage, setPercentage] = useState(1);
   const [feeRate, setFeeRate] = useState(5);
+  const [fee, setFee] = useState(0)
   const settingRef = useRef();
   const [result, getResult] = useTokenTwoAmount(tokenOne, tokenTwo, tokenOneAmount, currentPool)
   const [priceImpact, setPriceImpact] = useState(false);
 
   useEffect(() => {
+    axios.get(`${swapFeeApi}?fee_rate=${feeRate}`)
+      .then(({data}) => {
+        setFee(data.data)
+      })
+  }, [feeRate])
+  useEffect(() => {
     if(!result) return
-    setTokenTwoAmount(tokenTwo.tick === "BTC"? (result.out_token_amount / 1e8).toFixed(8): result.out_token_amount)
+    setTokenTwoAmount(tokenTwo.ticker === "BTC"? (result.out_token_amount / 1e8).toFixed(8): result.out_token_amount)
     setPriceImpact(false)
     const aVal = currentPool.balance2 * 0.3
     if (result.out_token_amount > currentPool.balance2 * 0.3) {
@@ -195,22 +201,22 @@ function ExchangeSwap() {
     if (!walletCheck) return;
     try {
       messageApi.notifyWarning(
-        `Ordering swap for ${tokenOne.tick.toUpperCase()}/${tokenTwo.tick.toUpperCase()}`,
+        `Ordering swap for ${tokenOne.ticker.toUpperCase()}/${tokenTwo.ticker.toUpperCase()}`,
         10
       );
       let tx_id;
-      if (tokenOne.tick == 'BTC') {
-        tx_id = await unisatWallet.sendBitcoin(factoryWallet, calculateFee(feeRate).swap_fee + tokenOneAmount * 1e8);
+      if (tokenOne.ticker == 'BTC') {
+        tx_id = await unisatWallet.sendBitcoin(factoryWallet, fee + tokenOneAmount * 1e8);
       } else {
-        tx_id = await unisatWallet.sendBitcoin(factoryWallet, calculateFee(feeRate).swap_fee || 4000);
+        tx_id = await unisatWallet.sendBitcoin(factoryWallet, fee || 4000);
       }
       const body = {
         sender_address: address,
         fee_txid: tx_id,
         fee_rate: feeRate,
-        in_token: tokenOne.tick,
-        out_token: tokenTwo.tick,
-        in_token_amount: tokenOne.tick == "BTC" ? Math.round(Number(tokenOneAmount * 1e8)) : Number(tokenOneAmount),
+        in_token: tokenOne.ticker,
+        out_token: tokenTwo.ticker,
+        in_token_amount: tokenOne.ticker == "BTC" ? Math.round(Number(tokenOneAmount * 1e8)) : Number(tokenOneAmount),
         lp_token: currentPool.lp_token,
       }
       // console.log('window.unisat :>> ', body);
@@ -221,7 +227,7 @@ function ExchangeSwap() {
         data: body,
       });
       // console.log('swap_response', data);
-      if (data.status == 'success') {
+      if (data.status == 'ok') {
         messageApi.notifySuccess('Swap order is successfully listed!')
         await loadOrderList();
       }
@@ -229,7 +235,7 @@ function ExchangeSwap() {
         messageApi.notifyFailed('Swap order was failed!')
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
       messageApi.notifyFailed('User canceled order')
     }
     setIsLoading(false);
@@ -304,7 +310,7 @@ function ExchangeSwap() {
     console.log("currentPool_One", currentPool)
     if (currentPool && currentPool.balance2 > 0) {
       let mul = 1;
-      if (tokenOne.tick == "BTC") {
+      if (tokenOne.ticker == "BTC") {
         mul = 1e8;
       }
       const predictIncome = currentPool.balance2 * value * mul / (currentPool.balance1 + value * mul);
@@ -324,7 +330,7 @@ function ExchangeSwap() {
   // useEffect(() => {
   //   if (currentPool && currentPool.balance2 > 0) {
   //     let mul = 1;
-  //     if (tokenOne.tick == "BTC") {
+  //     if (tokenOne.ticker == "BTC") {
   //       mul = 1e8;
   //     }
   //     const predictIncome = currentPool.balance2 * tokenOneAmount * mul / (currentPool.balance1 + tokenOneAmount * mul);
@@ -396,7 +402,7 @@ function ExchangeSwap() {
         <ReactPortal>
           <section className="modal__content">
             <h2>
-              {`Are you sure to swap ${tokenOne?.tick}(${tokenOneAmount}) to ${tokenTwo?.tick}(${tokenTwoAmount}) with a service fee of ${calculateFee(feeRate).swap_fee / 1e8} BTC?`}
+              {`Are you sure to swap ${tokenOne?.ticker}(${tokenOneAmount}) to ${tokenTwo?.ticker}(${tokenTwoAmount}) with a service fee of ${fee / 1e8} BTC?`}
             </h2>
 
             <div className="btn-group">
@@ -499,7 +505,7 @@ function ExchangeSwap() {
               />
             }
             <ExchangeSelectToken
-              amount={result ? tokenTwo.tick == 'BTC' ? (result.out_token_amount / 1e8).toFixed(8) : result.out_token_amount : ''}
+              amount={result ? tokenTwo.ticker == 'BTC' ? (result.out_token_amount / 1e8).toFixed(8) : result.out_token_amount : ''}
               setAmount={setTokenTwoAmount}
               token={posChange ? tokenOne : tokenTwo}
               setToken={posChange ? setTokenOne : setTokenTwo}
@@ -561,7 +567,7 @@ function ExchangeSwap() {
           }
           {true &&
             <ExchangeSelect
-              amount={result ? tokenTwo.tick == 'BTC' ? (result.out_token_amount / 1e8).toFixed(8) : result.out_token_amount : ''}
+              amount={result ? tokenTwo.ticker == 'BTC' ? (result.out_token_amount / 1e8).toFixed(8) : result.out_token_amount : ''}
               setAmount={setTokenTwoAmount}
               token={tokenTwo}
               setToken={setTokenTwo}
@@ -589,7 +595,7 @@ function ExchangeSwap() {
           }
           {posChange &&
             <ExchangeSelect
-              amount={result ? tokenTwo.tick == 'BTC' ? (result.out_token_amount / 1e8).toFixed(8) : result.out_token_amount : ''}
+              amount={result ? tokenTwo.ticker == 'BTC' ? (result.out_token_amount / 1e8).toFixed(8) : result.out_token_amount : ''}
               setAmount={onChangeTokenOneAmount}
               token={tokenOne}
               setToken={setTokenOne}

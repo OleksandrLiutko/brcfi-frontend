@@ -10,7 +10,7 @@ export default function useTokenTwoAmount(tokenOne, tokenTwo, tokenOneAmount, cu
     const func = async () => {
       if (tokenOne && tokenTwo && tokenOneAmount && currentPool) {
         const res = await getResult();
-        if (res.status == 'success') {
+        if (res.status == 'ok') {
           setResult(res.data);
           // console.log('useTokenTwoAmount :>> ', res.data);
           return;
@@ -29,10 +29,10 @@ export default function useTokenTwoAmount(tokenOne, tokenTwo, tokenOneAmount, cu
   }, [tokenOne, tokenTwo, tokenOneAmount, currentPool])
   const getResult = async () => {
     const body = {
-      in_token: tokenOne.tick,
-      out_token: tokenTwo.tick,
+      in_token: tokenOne.ticker,
+      out_token: tokenTwo.ticker,
       lp_token: currentPool.lp_token,
-      in_token_amount: tokenOne.tick === "BTC"? Number(tokenOneAmount * 1e8): Number(tokenOneAmount),
+      in_token_amount: tokenOne.ticker === "BTC"? Number(tokenOneAmount * 1e8): Number(tokenOneAmount),
     }
     const data = await fetchData({ method: 'post', data: body });
     return data;

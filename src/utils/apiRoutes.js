@@ -1,19 +1,25 @@
-export const host = 'https://bitcswap-api.proskillowner.com';
+export const host = 'https://brcfi-api.proskillowner.com';
 
 export const getVaultAddressApi = `${host}/getVaultAddress`;
-export const getWeightApi = `${host}/getfee`;
-export const tokenListApi = `${host}/getTokenList`;
-export const poolTokenListApi = `${host}/getPoolTokenList`;
+export const getTokenListApi = `${host}/getTokenList`;
+export const getPoolTokenListApi = `${host}/getPoolTokenList`;
+export const getTokenBalanceListApi = `${host}/getTokenBalanceList`;
 export const tokenInfoApi = `${host}/tokeninfo/pooltokenlist`;
 export const tokenDataListApi = `https://api.coinranking.com/v2/coins?tags[]=brc-20&limit=99`;
-export const poolListApi = `${host}/getpool`;
-export const createPoolApi = `${host}/createpool`;
+export const poolListApi = `${host}/getPoolList`;
+export const getPoolByTokenPairApi = `${host}/getPoolByTokenPair`;
+export const getPoolBalanceListApi = `${host}/getPoolBalanceList`;
+export const createPoolFeeApi = `${host}/createPool/getFee`;
+export const createPoolApi = `${host}/createPool`;
+export const addLiquidityFeeApi = `${host}/addLiquidity/getFee`;
+export const addLiquidityAmountApi = `${host}/addLiquidity/getAmount`;
 export const addLiquidityApi = `${host}/addliquidity`;
-export const addLiquidityAmountApi = `${host}/addliquidity/tokenamount`;
-export const removeLiquidityApi = `${host}/removeliquidity`;
-export const removeLiquidityAmountApi = `${host}/removeliquidity/tokenamount`;
+export const removeLiquidityFeeApi = `${host}/removeLiquidity/getFee`;
+export const removeLiquidityAmountApi = `${host}/removeLiquidity/getAmount`;
+export const removeLiquidityApi = `${host}/removeLiquidity`;
+export const swapFeeApi = `${host}/swap/getFee`;
+export const swapAmountApi = `${host}/swap/getAmount`;
 export const swapApi = `${host}/swap`;
-export const swapAmountApi = `${host}/swap/tokenamount`;
 export const getMyOrderListApi = `${host}/getMyOrderList`;
 export const getBalanceApi = `${host}/gettokenbalance`;
 export const deployTokenApi = `${host}/deploy`;
@@ -25,9 +31,10 @@ export const getRewardsApi = (add) => {
 }
 export const withdrawApi = `${host}/withdrawbtc`
 
-export const BTCTestExplorerUrl = 'https://mempool.space/tx/'
-export const getTXInfoUrl = 'https://mempool.space/api/tx/'
-export const feeRateUrl = 'https://mempool.space/api/v1/fees/recommended'
+export const mempoolApiUrl = 'https://mempool.space/testnet/api/v1';
+export const BTCTestExplorerUrl = `${mempoolApiUrl}/tx/`
+export const getTXInfoUrl = `${mempoolApiUrl}/tx/`
+export const feeRateUrl = `${mempoolApiUrl}/fees/recommended`
 
 export const dayilyURL = 'https://api.coingecko.com/api/v3/coins/ordinals/market_chart?vs_currency=usd&days=1'
 export const weeklyURL = 'https://api.coingecko.com/api/v3/coins/ordinals/market_chart?vs_currency=usd&days=7'

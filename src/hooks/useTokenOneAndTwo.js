@@ -10,7 +10,7 @@ export default function useTokenOneAndTwo(lPAmount, tokenOne, tokenTwo, lPToken)
     const func = async () => {
       if (tokenOne && tokenTwo && lPToken && lPAmount) {
         const res = await getResult();
-        if (res.status == 'success') {
+        if (res.status == 'ok') {
           setResult(res.data);
           return;
         }
@@ -29,9 +29,9 @@ export default function useTokenOneAndTwo(lPAmount, tokenOne, tokenTwo, lPToken)
 
   const getResult = async () => {
     const body = {
-      token1: tokenOne.tick,
-      token2: tokenTwo.tick,
-      lp_token: lPToken.tick,
+      token1: tokenOne.ticker,
+      token2: tokenTwo.ticker,
+      lp_token: lPToken.ticker,
       lp_token_amount: Number(lPAmount),
     }
     const data = await fetchData({ method: 'post', data: body });

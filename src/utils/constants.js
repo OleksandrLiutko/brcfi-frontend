@@ -45,7 +45,7 @@ export const formatTime = (timestamp) => {
 
 export const isStringEqual = (string1, string2) => {
   if (!string1 || !string2) return false;
-  return string1.tick.toUpperCase() === string2.tick.toUpperCase();
+  return string1.ticker.toUpperCase() === string2.ticker.toUpperCase();
 }
 
 export const defaultToken = {

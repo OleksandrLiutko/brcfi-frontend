@@ -12,7 +12,7 @@ export default function useLPAmount(tokenOne, tokenTwo, tokenOneAmount, tokenTwo
     const func = async () => {
       if (tokenOne && tokenTwo && tokenOneAmount && tokenTwoAmount && currentPool) {
         const res = await getResult();
-        if (res.status == 'success') {
+        if (res.status == 'ok') {
           setResult(res.data);
           return;
         }
@@ -32,11 +32,11 @@ export default function useLPAmount(tokenOne, tokenTwo, tokenOneAmount, tokenTwo
 
   const getResult = async () => {
     const body = {
-      token1: tokenOne.tick,
-      token2: tokenTwo.tick,
+      token1: tokenOne.ticker,
+      token2: tokenTwo.ticker,
       lp_token: currentPool.lp_token,
-      token_amount1: tokenOne.tick === "BTC"? Number(tokenOneAmount * 1e8): Number(tokenOneAmount),
-      token_amount2: tokenTwo.tick === "BTC"? Number(tokenTwoAmount * 1e8): Number(tokenTwoAmount),
+      token_amount1: tokenOne.ticker === "BTC"? Number(tokenOneAmount * 1e8): Number(tokenOneAmount),
+      token_amount2: tokenTwo.ticker === "BTC"? Number(tokenTwoAmount * 1e8): Number(tokenTwoAmount),
     }
     const data = await fetchData({ method: 'post', data: body });
     // console.log('useLPAmount :>> ', data);
