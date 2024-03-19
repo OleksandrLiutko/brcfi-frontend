@@ -37,7 +37,7 @@ const columns = [
     columnHelper.accessor("fee_rate", {
         header: () => <span>Fee Rate</span>,
     }),
-    columnHelper.accessor((row) => row.ordered_time, {
+    columnHelper.accessor((row) => row.start_time, {
         header: () => <span>Ordered Time</span>,
         id: "orderedTime",
         cell: (info) => <i>{formatTime(info.getValue())}</i>,

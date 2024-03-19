@@ -1,4 +1,3 @@
-import { Pagination } from "@tanstack/table-core";
 import TimeIcon from "../../../assets/icons/TimeIcon";
 import BlockScan from "../BlockScan";
 import { formatTime } from "../../../utils/constants";
@@ -25,15 +24,15 @@ export function SwapTable({ dataSource }) {
 
   const { unisatContext, appContext } = useAuthState();
   const { unisatWallet, connected, setUnisatInstalled, address, network, balance, connectWallet, checkConnect } = unisatContext;
-  const { factoryWallet, poolList, tokenSelectList, tokenOne, tokenTwo, setTokenOne, setTokenTwo, orderList, loadOrderList, currentPool, calculateFee } = appContext;
+  const { factoryWallet, poolList, tokenSelectList, tokenOne, tokenTwo, setTokenOne, setTokenTwo, orderList, loadOrderList, currentPool } = appContext;
 
 
   const tokenSend = (record, id) => {
     const status = record.order_status;
     const transfer = record.in_token_transfer;
     const token = record.in_token;
-    const amount = id == 1 ? record.token_amount1 : record.token_amount2;
-    const inscriptionId = transfer ? transfer.inscription : ''
+    const amount = id == 1 ? record.token1_amount : record.token2_amount;
+    const inscriptionId = transfer ? transfer.inscriptions[0].id : ''
     const disabled = (inscriptionId == '' || localStorage.getItem(inscriptionId) == 'true')
     const targetWallet = poolList.find((pool) => pool.lp_token === record.lp_token).address;
     return (
@@ -77,7 +76,7 @@ export function SwapTable({ dataSource }) {
             <h4>{item.no}</h4>
             <p className="flex items-center gap-8">
               <TimeIcon classes="icon" />
-              {formatTime(item.ordered_time)}
+              {formatTime(item.start_time)}
             </p>
           </div>
 

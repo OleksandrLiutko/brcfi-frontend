@@ -1,4 +1,3 @@
-import { Pagination } from "@tanstack/table-core";
 import TimeIcon from "../../../assets/icons/TimeIcon";
 import BlockScan from "../BlockScan";
 import NoDataIcon from "../../../assets/icons/NoDataIcon";
@@ -24,14 +23,14 @@ export function AddLiquidityTable({ dataSource }) {
 
   const { unisatContext, appContext } = useAuthState();
   const { unisatWallet, connected, setUnisatInstalled, address, network, balance, connectWallet, checkConnect } = unisatContext;
-  const { factoryWallet, poolList, tokenSelectList, tokenOne, tokenTwo, setTokenOne, setTokenTwo, orderList, loadOrderList, currentPool, calculateFee } = appContext;
+  const { factoryWallet, poolList, tokenSelectList, tokenOne, tokenTwo, setTokenOne, setTokenTwo, orderList, loadOrderList, currentPool } = appContext;
 
   const TokenSend = ({ record, id }) => {
     const status = record.order_status;
-    const transfer = id == 1 ? record.token_transfer1 : record.token_transfer2;
+    const transfer = id == 1 ? record.token1_transfer : record.token2_transfer;
     const token = id == 1 ? record.token1 : record.token2;
-    const amount = id == 1 ? record.token_amount1 : record.token_amount2;
-    const inscriptionId = transfer ? transfer.inscription : ''
+    const amount = id == 1 ? record.token1_amount : record.token2_amount;
+    const inscriptionId = transfer ? transfer.inscriptions[0].id : ''
     const disabled = (status != 11 || localStorage.getItem(inscriptionId) == 'true')
     const targetWallet = poolList.length ? poolList.find((pool) => pool.lp_token === record.lp_token).address : '';
     return (
@@ -101,7 +100,7 @@ export function AddLiquidityTable({ dataSource }) {
 
           <div>
             <p>Token Amount</p>
-            <h4>{item.token1 === 'BTC'? item.token_amount1/ 1e8: item.token_amount1 + '/' + item.token2 === 'BTC'? item.token_amount2/ 1e8: item.token_amount2}</h4>
+            <h4>{item.token1 === 'BTC'? item.token1_amount/ 1e8: item.token1_amount + '/' + item.token2 === 'BTC'? item.token2_amount/ 1e8: item.token2_amount}</h4>
             <p>Send Token1  </p>
           </div>
 

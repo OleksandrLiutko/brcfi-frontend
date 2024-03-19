@@ -1,4 +1,3 @@
-import { Pagination } from "@tanstack/table-core";
 import TimeIcon from "../../../assets/icons/TimeIcon";
 import BlockScan from "../BlockScan";
 import NoDataIcon from "../../../assets/icons/NoDataIcon";
@@ -37,7 +36,7 @@ export function CreatePoolTable({ dataSource }) {
             <p>No</p>
             <h4>{item.no}</h4>
             <p className="flex items-center gap-8">
-              <TimeIcon classes="icon" />{formatTime(item.ordered_time)}
+              <TimeIcon classes="icon" />{formatTime(item.start_time)}
             </p>
           </div>
 

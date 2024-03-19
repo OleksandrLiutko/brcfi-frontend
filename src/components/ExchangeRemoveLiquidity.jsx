@@ -39,6 +39,7 @@ function ExchageRemoveLiquidity() {
     const [showFeeReteModal, setShowFeeRateModal] = useState(false);
     const [feeRate, setFeeRate] = useState(1);
     const [fee, setFee] = useState(0)
+
     useEffect(() => {
         axios.get(`${removeLiquidityFeeApi}?fee_rate=${feeRate}`)
             .then(({ data }) => {
@@ -49,10 +50,10 @@ function ExchageRemoveLiquidity() {
     const [lpTokenList, setLpTokenList] = useState(poolList.map((pool) => {
         return {
             ticker: pool.lp_token,
-          token1: pool.token1,
-          token2: pool.token2,
-          address: pool.address,
-          balance: pool.balance
+            token1: pool.token1,
+            token2: pool.token2,
+            address: pool.address,
+            balance: pool.balance
         }
     }));
 
@@ -60,15 +61,15 @@ function ExchageRemoveLiquidity() {
         setLpTokenList(poolList.map((pool) => {
             return {
                 ticker: pool.lp_token,
-              token1: pool.token1,
-              token2: pool.token2,
-              address: pool.address,
-              balance: pool.balance
+                token1: pool.token1,
+                token2: pool.token2,
+                address: pool.address,
+                balance: pool.balance
             }
         })
         )
     }, [poolList])
-    
+
     useEffect(() => {
         setLPToken(lpTokenList[0])
     }, [])
@@ -88,27 +89,27 @@ function ExchageRemoveLiquidity() {
         const status = record.order_status;
         const transfer = record.lp_token_transfer;
         const token = record.lp_token;
-        const amount = id == 1 ? record.token_amount1 : record.token_amount2;
-        const inscriptionId = transfer ? transfer.inscription : ''
+        const amount = id == 1 ? record.token1_amount : record.token2_amount;
+        const inscriptionId = transfer ? transfer.inscriptions[0].id : ''
         const disabled = (inscriptionId == '' || localStorage.getItem(inscriptionId) == 'true' || status == 99)
         const targetWallet = poolList.find((pool) => pool.lp_token === record.lp_token).address;
         useEffect(() => {
             let isMounted = true;
-            const getFeeRate = async() => {
-              const res = await axios({
-                method: 'get',
-                url: feeRateUrl
-              });
-              if (isMounted) {
-                setCurrentFee(res.data?.fastestFee || 10);
-              }
+            const getFeeRate = async () => {
+                const res = await axios({
+                    method: 'get',
+                    url: feeRateUrl
+                });
+                if (isMounted) {
+                    setCurrentFee(res.data?.fastestFee || 10);
+                }
             }
             if (!disabled) {
-              getFeeRate()
+                getFeeRate()
             }
-      
+
             return () => {
-              isMounted = false
+                isMounted = false
             }
         }, [])
         return (
@@ -121,7 +122,7 @@ function ExchageRemoveLiquidity() {
                         disabled={disabled}
                         onClick={async () => {
                             try {
-                                await window.unisat.sendInscription(targetWallet, inscriptionId, {feeRate: currentFee});
+                                await window.unisat.sendInscription(targetWallet, inscriptionId, { feeRate: currentFee });
                                 localStorage.setItem(inscriptionId, 'true');
                                 loadOrderList();
                             } catch (error) {
@@ -140,8 +141,8 @@ function ExchageRemoveLiquidity() {
     }
 
     const amountRender = (record) => {
-        if (record.token_amount1)
-            return <span>{`${record.token1 === 'BTC'? record.token_amount1/1e8 : record.token_amount1}/${record.token2 === 'BTC'? record.token_amount2/1e8 : record.token_amount2}`}</span>
+        if (record.token1_amount)
+            return <span>{`${record.token1 === 'BTC' ? record.token1_amount / 1e8 : record.token1_amount}/${record.token2 === 'BTC' ? record.token2_amount / 1e8 : record.token2_amount}`}</span>
         else return <></>
     }
 
@@ -158,7 +159,7 @@ function ExchageRemoveLiquidity() {
         columnHelper.accessor("fee_rate", {
             header: () => <span>Fee Rate</span>,
         }),
-        columnHelper.accessor((row) => row.ordered_time, {
+        columnHelper.accessor((row) => row.start_time, {
             header: () => <span>Ordered Time</span>,
             id: "orderedTime",
             cell: (info) => <i>{formatTime(info.getValue())}</i>,
@@ -278,11 +279,11 @@ function ExchageRemoveLiquidity() {
     const onCloseFeeRateModal = (e) => {
         setShowFeeRateModal(false)
     }
-  
+
     const onConfirmFeeRate = (feeRate) => {
-      setFeeRate(feeRate);
-      openModal();
-      setShowFeeRateModal(false);
+        setFeeRate(feeRate);
+        openModal();
+        setShowFeeRateModal(false);
     }
 
     return (
@@ -361,7 +362,7 @@ function ExchageRemoveLiquidity() {
                         </g>
                     </svg>
                     <ExchangeSelect
-                        amount={result ? tokenOne.ticker == "BTC" ? (result.token_amount1 / 1e8).toFixed(8) : result.token_amount1 : ''}
+                        amount={result ? tokenOne.ticker == "BTC" ? (result.token1_amount / 1e8).toFixed(8) : result.token1_amount : ''}
                         setAmount={setTokenOneAmount}
                         token={tokenOne}
                         setToken={setTokenOne}
@@ -375,7 +376,7 @@ function ExchageRemoveLiquidity() {
                     />
 
                     <ExchangeSelect
-                        amount={result ? tokenTwo.ticker == "BTC" ? (result.token_amount2 / 1e8).toFixed(8) : result.token_amount2 : ''}
+                        amount={result ? tokenTwo.ticker == "BTC" ? (result.token2_amount / 1e8).toFixed(8) : result.token2_amount : ''}
                         setAmount={setTokenTwoAmount}
                         token={tokenTwo}
                         setToken={setTokenTwo}
@@ -391,7 +392,7 @@ function ExchageRemoveLiquidity() {
                     <RemoveBtn />
                 </div>
             </section>
-            
+
             <section className="table__container">
                 {/* <header className="flex items-center">
                     <Filters />

@@ -35,8 +35,8 @@ export default function useLPAmount(tokenOne, tokenTwo, tokenOneAmount, tokenTwo
       token1: tokenOne.ticker,
       token2: tokenTwo.ticker,
       lp_token: currentPool.lp_token,
-      token_amount1: tokenOne.ticker === "BTC"? Number(tokenOneAmount * 1e8): Number(tokenOneAmount),
-      token_amount2: tokenTwo.ticker === "BTC"? Number(tokenTwoAmount * 1e8): Number(tokenTwoAmount),
+      token1_amount: tokenOne.ticker === "BTC"? Number(tokenOneAmount * 1e8): Number(tokenOneAmount),
+      token2_amount: tokenTwo.ticker === "BTC"? Number(tokenTwoAmount * 1e8): Number(tokenTwoAmount),
     }
     const data = await fetchData({ method: 'post', data: body });
     // console.log('useLPAmount :>> ', data);

@@ -38,11 +38,12 @@ function Aside({ setToggleMobileMenu }) {
     return (
         <aside className={`app__menu`}>
             <figure className="logo__container_aside hide-mobile gap-3" onClick={() => { navigate('/') }}>
-                <img
+                {/* <img
                     src={logo} alt="logo"
                     width={200}
                     height={50}
-                />
+                /> */}
+                <p>Main menu</p>
                 {/* <span>BrcFi</span> */}
             </figure>
 
@@ -50,7 +51,7 @@ function Aside({ setToggleMobileMenu }) {
                 <li>
                     <NavLink className="d-btn d-btn-primary" to={"/"} onClick={closeMenu}>
                         <DashboardIcon />
-                        Home
+                        Dashboard
                     </NavLink>
                 </li>
                 <li >
@@ -71,30 +72,30 @@ function Aside({ setToggleMobileMenu }) {
                         Pool
                     </NavLink>
                 </li>
-                <li>
+                {/* <li>
                     <NavLink className="d-btn d-btn-primary" to={"/lending"} onClick={closeMenu}>
                         <PoolIcon />
                         Lending/Borrowing
                     </NavLink>
-                </li>
+                </li> */}
                 <li>
                     <NavLink className="d-btn d-btn-primary" to={"/launchground"} onClick={closeMenu}>
                         <LaunchGround />
-                        LaunchGround
+                        Launch Pad{/* LaunchGround */}
                     </NavLink>
                 </li>
-                <li>
+                {/* <li>
                     <NavLink className="d-btn d-btn-primary" to={"/brcscan"} onClick={closeMenu}>
                         <BrcScanIcon />
                         BrcScan
                     </NavLink>
-                </li>
-                <li>
+                </li> */}
+                {/* <li>
                     <NavLink className="d-btn d-btn-primary" to={"/wallet"} onClick={closeMenu}>
                         <Wallet />
                         Wallet
                     </NavLink>
-                </li>
+                </li> */}
 
                 {/* <li>
                     <NavLink className="d-btn d-btn-primary" to={"/nft-collection"}>

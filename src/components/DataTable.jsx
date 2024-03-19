@@ -87,7 +87,7 @@ function DataTable({ title = "", type, dataSource, columns }) {
 
   useEffect(() => {
     const datas = dataSource
-      .sort((a, b) => b.ordered_time - a.ordered_time)
+      .sort((a, b) => b.start_time - a.start_time)
       .filter((row) => row.order_type === type)
       .map((row, index) => {
         return {

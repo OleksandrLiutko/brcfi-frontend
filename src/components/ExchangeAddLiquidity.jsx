@@ -12,7 +12,7 @@ import { ORDER_STATUS_LISTED, formatOrderStatus, formatTime, sleep } from "../ut
 import { createColumnHelper } from "@tanstack/react-table";
 import { useModalState } from "../context/ModalContext";
 import ReactPortal from "./ReactPortal";
-import { BTCTestExplorerUrl, addLiquidityApi, feeRateUrl, getTXInfoUrl, updateOrderApi, addLiquidityFeeApi } from "../utils/apiRoutes";
+import { addLiquidityApi, feeRateUrl, getTXInfoUrl, updateOrderApi, addLiquidityFeeApi } from "../utils/apiRoutes";
 import axios from "axios";
 import { Tooltip } from "react-tooltip";
 import TooltipComp from "./customComponents/Tooltip";
@@ -57,15 +57,15 @@ function ExchangeAddLiquidity() {
         let transfer, inscriptionId;
         const token = id == 1 ? record.token1 : record.token2;
         if (token == 'BTC') {
-            transfer = id == 1 ? record.token_transfer2 : record.token_transfer1;
-            inscriptionId = transfer ? transfer.inscription + 'BTC' : ''
+            transfer = id == 1 ? record.token2_transfer : record.token1_transfer;
+            inscriptionId = transfer ? transfer.inscriptions[0].id + 'BTC' : ''
         } else {
-            transfer = id == 1 ? record.token_transfer1 : record.token_transfer2;
-            inscriptionId = transfer ? transfer.inscription : '';
+            transfer = id == 1 ? record.token1_transfer : record.token2_transfer;
+            inscriptionId = transfer ? transfer.inscriptions[0].id : '';
             // const res = await axios
             // await sleep(1000)
         }
-        const amount = id == 1 ? record.token_amount1 : record.token_amount2;
+        const amount = id == 1 ? record.token1_amount : record.token2_amount;
         const confirmed = transfer ? localStorage.getItem(transfer.reveal) == 'true' : false;
         const disabled = (status != 11 || localStorage.getItem(inscriptionId) == 'true') || status == 99 //|| !(isConfirmed || confirmed)
         const targetWallet = poolList.length ? poolList.find((pool) => pool.lp_token === record.lp_token).address : '';
@@ -73,23 +73,23 @@ function ExchangeAddLiquidity() {
 
         useEffect(() => {
             let isMounted = true;
-            const getFeeRate = async() => {
-              const res = await axios({
-                method: 'get',
-                url: feeRateUrl
-              });
-              if (isMounted) {
-                setCurrentFee(res.data?.fastestFee || 10);
-              }
+            const getFeeRate = async () => {
+                const res = await axios({
+                    method: 'get',
+                    url: feeRateUrl
+                });
+                if (isMounted) {
+                    setCurrentFee(res.data?.fastestFee || 10);
+                }
             }
             if (!disabled) {
-              getFeeRate()
+                getFeeRate()
             }
-      
+
             return () => {
-              isMounted = false
+                isMounted = false
             }
-          }, [])
+        }, [])
 
         return (
             <>
@@ -104,7 +104,7 @@ function ExchangeAddLiquidity() {
                         onClick={async () => {
                             try {
                                 if (token == "BTC") {
-                                    const tx = await window.unisat.sendBitcoin(factoryWallet, amount, {feeRate: currentFee});
+                                    const tx = await window.unisat.sendBitcoin(factoryWallet, amount, { feeRate: currentFee });
                                     const body = {
                                         sender_address: address,
                                         fee_txid: tx,
@@ -117,7 +117,7 @@ function ExchangeAddLiquidity() {
                                     }
                                 }
                                 else {
-                                    await window.unisat.sendInscription(targetWallet, inscriptionId, {feeRate: currentFee});
+                                    await window.unisat.sendInscription(targetWallet, inscriptionId, { feeRate: currentFee });
                                 }
                                 localStorage.setItem(inscriptionId, 'true');
                                 loadOrderList();
@@ -138,7 +138,7 @@ function ExchangeAddLiquidity() {
     }
 
     const amountRender = (record) => {
-        return <span>{`${record.token1 === 'BTC'? record.token_amount1/1e8 : record.token_amount1}/${record.token2 === 'BTC'? record.token_amount2/1e8 : record.token_amount2}`}</span>
+        return <span>{`${record.token1 === 'BTC' ? record.token1_amount / 1e8 : record.token1_amount}/${record.token2 === 'BTC' ? record.token2_amount / 1e8 : record.token2_amount}`}</span>
     }
 
     const columns = [
@@ -157,7 +157,7 @@ function ExchangeAddLiquidity() {
         columnHelper.accessor("fee_rate", {
             header: () => <span>Fee Rate</span>,
         }),
-        columnHelper.accessor((row) => row.ordered_time, {
+        columnHelper.accessor((row) => row.start_time, {
             header: () => <span>Ordered Time</span>,
             id: "orderedTime",
             cell: (info) => <i>{formatTime(info.getValue())}</i>,
@@ -236,15 +236,15 @@ function ExchangeAddLiquidity() {
             const predictIncome = currentPool.balance2 * value * mul / currentPool.balance1;
             setTokenTwoAmount(predictIncome);
         }
-      }
-    
-      const onChangeTokenTwoAmount = (value) => {
+    }
+
+    const onChangeTokenTwoAmount = (value) => {
         setTokenTwoAmount(value)
         if (currentPool && currentPool.balance1 > 0) {
-          const predictIncome = currentPool.balance1 * value / currentPool.balance2;
-          setTokenOneAmount(predictIncome);
+            const predictIncome = currentPool.balance1 * value / currentPool.balance2;
+            setTokenOneAmount(predictIncome);
         }
-      }
+    }
 
     const handleAddLiquidity = async () => {
         setIsLoading(true);
@@ -263,13 +263,14 @@ function ExchangeAddLiquidity() {
             const tx_id = await unisatWallet.sendBitcoin(factoryWallet, fee, { feeRate });
             const body = {
                 sender_address: address,
+                ordinals_address: address,
                 fee_txid: tx_id,
                 fee_rate: feeRate,
                 token1: tokenOne.ticker,
                 token2: tokenTwo.ticker,
                 lp_token: currentPool.lp_token,
-                token_amount1: tokenOne.ticker == "BTC" ? Math.round(Number(tokenOneAmount * 1e8)) : Number(tokenOneAmount),
-                token_amount2: tokenTwo.ticker == "BTC" ? Math.round(Number(tokenTwoAmount * 1e8)) : Number(tokenTwoAmount),
+                token1_amount: tokenOne.ticker == "BTC" ? Math.round(Number(tokenOneAmount * 1e8)) : Number(tokenOneAmount),
+                token2_amount: tokenTwo.ticker == "BTC" ? Math.round(Number(tokenTwoAmount * 1e8)) : Number(tokenTwoAmount),
             }
             // console.log('window.unisat :>> ', body);
             const { data } = await axios({
@@ -326,11 +327,11 @@ function ExchangeAddLiquidity() {
     const onCloseFeeRateModal = (e) => {
         setShowFeeRateModal(false)
     }
-  
+
     const onConfirmFeeRate = (feeRate) => {
-      setFeeRate(feeRate);
-      openModal();
-      setShowFeeRateModal(false);
+        setFeeRate(feeRate);
+        openModal();
+        setShowFeeRateModal(false);
     }
 
     return (
@@ -389,9 +390,9 @@ function ExchangeAddLiquidity() {
                     <ExchangeSelectToken
                         amount={result ? tokenTwo.ticker == 'BTC' ? (result.out_token_amount / 1e8).toFixed(8) : result.out_token_amount : ''}
                         setAmount={setTokenTwoAmount}
-                        token={posChange? tokenOne : tokenTwo}
-                        setToken={posChange? setTokenOne: setTokenTwo}
-                        list={posChange? tokenSelectList[0] : tokenSelectList[1]}
+                        token={posChange ? tokenOne : tokenTwo}
+                        setToken={posChange ? setTokenOne : setTokenTwo}
+                        list={posChange ? tokenSelectList[0] : tokenSelectList[1]}
                         selectText={"Select Token"}
                         bordered={true}
                         inputDisabled={true}
@@ -436,40 +437,10 @@ function ExchangeAddLiquidity() {
                         list={tokenSelectList[1]}
                         selectText={"Select Token"}
                         bordered={true}
-                        inputDisabled={currentPool}
                         selectIcon={ordinals}
                         tokenDataList={tokenDataList}
+                        showBalance={true}
                     />
-
-                    {/* {!posChange &&
-                        <ExchangeSelect
-                            amount={tokenOneAmount}
-                            setAmount={setTokenOneAmount}
-                            token={tokenOne}
-                            setToken={setTokenOne}
-                            list={tokenSelectList[0]}
-                            selectText={"Select Token"}
-                            bordered={true}
-                            // inputDisabled={true}
-                            selectIcon={ordinals} />
-                    } */}
-
-                    {/* <div className="mt-[3rem]"></div> */}
-
-                    {/* <ExchangeSelect
-                        amount={result ? result.lp_token_amount : ''}
-                        setAmount={setLPAmount}
-                        token={{ ticker: currentPool ? currentPool.lp_token : 'No pool' }}
-                        setToken={setTokenTwo}
-                        list={tokenSelectList[1]}
-                        selectText={currentPool ? currentPool.lp_token : 'No pool'}
-                        bordered={true}
-                        selectIcon={ordinals}
-                        disabled={true}
-                        label={currentPool ? 'You will receive LP token' : 'Select available token pair.'}
-                        inputDisabled={true}
-                        tokenDataList={tokenDataList}
-                    /> */}
 
                     <AddLiquidityBtn />
                 </div>

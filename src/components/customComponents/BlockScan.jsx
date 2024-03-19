@@ -1,10 +1,10 @@
-import { BTCTestExplorerUrl } from "../../utils/apiRoutes";
+import { mempoolTxUrl } from "../../utils/apiRoutes";
 
 
 export default function BlockScan({ transaction }) {
   return (
     <a
-      href={BTCTestExplorerUrl + transaction}
+      href={`${mempoolTxUrl}/${transaction}`}
       target='_blank'
       style={{ color: '#6900FF' }}
     >

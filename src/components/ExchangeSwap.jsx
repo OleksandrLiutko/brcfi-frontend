@@ -60,6 +60,7 @@ function ExchangeSwap() {
         setFee(data.data)
       })
   }, [feeRate])
+
   useEffect(() => {
     if(!result) return
     setTokenTwoAmount(tokenTwo.ticker === "BTC"? (result.out_token_amount / 1e8).toFixed(8): result.out_token_amount)
@@ -77,8 +78,8 @@ function ExchangeSwap() {
     const status = record.order_status;
     const transfer = record.in_token_transfer;
     const token = record.in_token;
-    const amount = id == 1 ? record.token_amount1 : record.token_amount2;
-    const inscriptionId = transfer ? transfer.inscription : ''
+    const amount = id == 1 ? record.token1_amount : record.token2_amount;
+    const inscriptionId = transfer ? transfer.inscriptions[0].id : ''
     const disabled = (inscriptionId == '' || localStorage.getItem(inscriptionId) == 'true') || token == 'BTC' || status == 99
     const targetWallet = poolList.find((pool) => pool.lp_token === record.lp_token).address;
     useEffect(() => {
@@ -148,7 +149,7 @@ function ExchangeSwap() {
     columnHelper.accessor("fee_rate", {
       header: () => <span>Fee Rate</span>,
     }),
-    columnHelper.accessor((row) => row.ordered_time, {
+    columnHelper.accessor((row) => row.start_time, {
       id: "orderedTime",
       cell: (info) => <i>{formatTime(info.getValue())}</i>,
       header: () => <span>Ordered Time</span>,

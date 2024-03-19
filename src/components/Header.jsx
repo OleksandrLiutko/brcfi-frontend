@@ -8,7 +8,8 @@ import { useAuthState } from "../context/AuthContext";
 import ClipIcon from "../assets/icons/ClipIcon";
 import RightArrow from "../assets/icons/RightArrow";
 
-import logo from "../assets/images/logo.png";
+// import logo from "../assets/images/logo.png";
+import logo from "../assets/icons/logo.svg";
 import unisat_icon from "../assets/icons/unisatWalletIcon.png";
 import MobileMenuOpenIcon from "../assets/icons/MobileMenuOpenIcon";
 import MobileMenuCloseIcon from "../assets/icons/MobileMenuCloseIcon";
@@ -57,9 +58,10 @@ function Header({ toggleWalletList, toggleNetworkList, toggleMobileMenu, setTogg
                     <Aside setToggleMobileMenu={setToggleMobileMenu} />
                 </section>
             )}
-            <header className={`header ${authState.preferDark ? "dark-theme" : ""} ${!isMobileView_800 ? 'ml-[312px]' : ''}`}>
-                <figure className="logo__container hide-desktop" onClick={() => { navigate('/') }}>
-                    <img className="w-[50px] !object-contain" src={logo} alt="logo" />
+            
+            <header className={`header ${authState.preferDark ? "dark-theme" : ""} `}> {/* ${!isMobileView_800 ? 'ml-[312px]' : ''} */}
+                <figure className="logo__container" onClick={() => { navigate('/') }}> {/*hide-desktop*/}
+                    <img className="h-[24]" src={logo} alt="logo" />
                 </figure>
 
                 {isMobileView_800 && (
@@ -84,7 +86,7 @@ function Header({ toggleWalletList, toggleNetworkList, toggleMobileMenu, setTogg
                 {!isMobileView_800 && (
                     <button className="d-btn d-btn-outline d-btn-narrow flex items-center gap-6" onClick={connectWallet}>
                         <img src={unisat_icon} width={31} height={31}/>
-                        {!connected ? 'Connect' : address?.slice(0, 5) + '...' + address?.slice(-5)}
+                        {!connected ? 'Connect Wallet' : address?.slice(0, 5) + '...' + address?.slice(-5)}
                     </button>
                 )}
 
