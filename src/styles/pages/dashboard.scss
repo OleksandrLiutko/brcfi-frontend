@@ -1,35 +1,22 @@
 .dashboard__container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    height: 100%;
     
-    h1 {
-        font-family: "Space Grotesk";
-        font-size: 32px !important;
-        text-align: left;
-        margin-bottom: 1rem;
-        font-weight: 500 !important;
-        line-height: 20px;
-        letter-spacing: 0em;
-        text-align: left;
-    }
-
-    &>p {
-        text-align: center;
-        margin-bottom: 2rem;
-    }
+    // &>p {
+    //     text-align: center;
+    //     margin-bottom: 2rem;
+    // }
 
     .cards__container {
-        // display: grid;
-        // grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
-        // grid-gap: 1.5rem;
-
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
         gap: 16px; //1.5rem;
 
-        margin-bottom: 1.5rem;
-
         .card {
-            flex: 1 1 18rem;
+            flex: 1 1; // 18rem;
             background-color: getColor(backgroundDim);
             border-radius: $border-radius;
             text-align: center;
@@ -109,6 +96,9 @@
         }
 
         &__detail {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
             flex: 1;
             // border-radius: $border-radius;
             position: relative;
@@ -214,7 +204,7 @@
     }
 
     @media only screen and (max-width: 1280px) {
-        padding: 1.5rem;
+        // padding: 1.5rem;
 
         .card {
             margin-bottom: 20px;
@@ -228,7 +218,11 @@
             // }
         }
     }
-
+    @media only screen and (max-width: 950px) {
+        .cards__container {
+            flex-direction: column;
+        }
+    }
     @media only screen and (max-width: 500px) {
         .cards__container {
             width: 100%;
@@ -236,7 +230,8 @@
         }
 
         .card {
-            margin-bottom: 20px;
+            flex-direction: row;
+            // margin-bottom: 20px;
         }
 
         .content {

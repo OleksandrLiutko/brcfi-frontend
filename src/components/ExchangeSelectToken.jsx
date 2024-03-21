@@ -56,10 +56,11 @@ function ExchangeSelectToken({ amount, setAmount, token, setToken, list, tokenDa
 
     return (
         <>
-            <div className="relative text-[14px] py-[15px] cursor-pointer w-full rounded-l-lg"
+        {label === "From" && 
+            <div className="relative text-[14px] cursor-pointer w-full rounded-l-lg"
                 onClick={handleToggleDataList}
             >
-                <div className="mb-5">{label}</div>
+                {/* <div className='mb-5'>{label}</div> */}
                 <div className="flex items-center">
                     <img className="w-[56px] h-[56px] icon" src={selectedOption?.ticker === 'BTC' ? btcIcon : selectedOption?.ticker === 'BZFI'? brcfiIcon : (() => {
                             const selectedItem = tokenDataList?.filter(item => item.symbol.toLowerCase() === selectedOption?.ticker?.toLowerCase());
@@ -86,6 +87,40 @@ function ExchangeSelectToken({ amount, setAmount, token, setToken, list, tokenDa
                     }
                 </div>
             </div>
+        }
+        {label === "To" && 
+            <div className="relative text-[14px] cursor-pointer w-full rounded-l-lg"
+                onClick={handleToggleDataList}
+            >
+                {/* <div className='mb-5'>{label}</div> */}
+                <div className="flex items-center flex-row-reverse">
+                    
+                    <img className="w-[56px] h-[56px] icon" src={selectedOption?.ticker === 'BTC' ? btcIcon : selectedOption?.ticker === 'BZFI'? brcfiIcon : (() => {
+                            const selectedItem = tokenDataList?.filter(item => item.symbol.toLowerCase() === selectedOption?.ticker?.toLowerCase());
+                            if (selectedItem && selectedItem.length > 0) {
+                                return selectedItem[0].iconUrl + "?size=30x30";
+                            }
+                            return ordinalIcon;
+                        })()} alt=""  style={{borderRadius: "50%"}} />
+                        <div className="pr-3 !text-right">
+                        <div className="font-bold mb-5">{selectedOption?.ticker || "Select"}</div>
+                        <div className="text-[12px] text-[#6F767E]">{selectedOption?.ticker === 'BTC' ? "On Bitcoin" : "Ordinal"}</div>
+                    </div>
+                </div>
+
+                <div className="">
+                    {
+                        !disabled && <DataList
+                            show={toggleDataList}
+                            options={list}
+                            handleBlur={handleDataListBlur}
+                            setSelectedOption={setSelectedOption}
+                            setToken={setToken}
+                        />
+                    }
+                </div>
+            </div>
+        }
         </>
     );
 }

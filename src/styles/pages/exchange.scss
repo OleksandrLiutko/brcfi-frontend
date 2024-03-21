@@ -6,11 +6,13 @@
 
     .top {
         .btn-actions {
-            max-width: 450px;
+            max-width: 480px;
             width: 100%;
             margin: auto;
             flex-wrap: wrap;
-            padding: 0 3rem;
+            padding: 8px;
+            border: 1px solid #FFFFFF14;
+            border-radius: 32px;
 
             .d-btn {
                 height: 45px;
@@ -47,10 +49,10 @@
 
     &-swap {
         border-radius: $border-radius;
-        margin-bottom: 3.5rem;
-        padding: 3rem;
+        // margin-bottom: 3.5rem;
         width: 512px;
         max-width: 512px;
+        padding: 16px;
         background: #00000052; //#ffffff65;
 
         .dark-theme & {
@@ -131,7 +133,7 @@
     }
 
     @media only screen and (max-width: 1280px) {
-        padding: 6rem 3.5rem;
+        // padding: 6rem 3.5rem;
     }
 
     @media only screen and (max-width: 800px) {

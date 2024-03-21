@@ -9,7 +9,7 @@ import ClipIcon from "../assets/icons/ClipIcon";
 import RightArrow from "../assets/icons/RightArrow";
 
 // import logo from "../assets/images/logo.png";
-import logo from "../assets/icons/logo.svg";
+import logo from "../assets/icons/logobrcpad.png";
 import unisat_icon from "../assets/icons/unisatWalletIcon.png";
 import MobileMenuOpenIcon from "../assets/icons/MobileMenuOpenIcon";
 import MobileMenuCloseIcon from "../assets/icons/MobileMenuCloseIcon";
@@ -61,12 +61,12 @@ function Header({ toggleWalletList, toggleNetworkList, toggleMobileMenu, setTogg
             
             <header className={`header ${authState.preferDark ? "dark-theme" : ""} `}> {/* ${!isMobileView_800 ? 'ml-[312px]' : ''} */}
                 <figure className="logo__container" onClick={() => { navigate('/') }}> {/*hide-desktop*/}
-                    <img className="h-[24]" src={logo} alt="logo" />
+                    <img className="w-[200px]" src={logo} alt="logo" />
                 </figure>
 
                 {isMobileView_800 && (
                     <button
-                        className="d-btn d-btn-primary d-btn-grey flex items-center gap-6"
+                        className="d-btn d-btn-outline d-btn-narrow flex items-center gap-6"
                         onClick={connectWallet}
                     >
                          <img src={unisat_icon} width={31} height={31}/>
@@ -92,13 +92,13 @@ function Header({ toggleWalletList, toggleNetworkList, toggleMobileMenu, setTogg
 
                 {!toggleMobileMenu && isMobileView_800 && (
                     <button onClick={() => setToggleMobileMenu(true)} className="hide-desktop">
-                        <MobileMenuOpenIcon classes="icon-xl" viewBox="0 0 42 37" />
+                        <MobileMenuOpenIcon classes="icon fill-white" viewBox="0 0 42 37" />
                     </button>
                 )}
 
                 {toggleMobileMenu && isMobileView_800 && (
                     <button onClick={() => setToggleMobileMenu(false)} className="hide-desktop">
-                        <MobileMenuCloseIcon classes="icon-xl" viewBox="0 0 36 37" />
+                        <MobileMenuCloseIcon classes="icon fill-white" viewBox="0 0 36 37" />
                     </button>
                 )}
             </header>

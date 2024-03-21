@@ -25,10 +25,12 @@
     // background-repeat: round;
     background-position: center;
     padding: 32px;
-    gap: 40px;
+    // display: flex;
+    // flex-direction: column;
+    // gap: 40px;
 
     position: relative;
-    min-height: calc(100% - 13rem);
+    min-height: 100%; //calc(100% - 13rem);
     border: none;
     height: 100%; //max-content;
     width: 100%;

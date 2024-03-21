@@ -55,9 +55,26 @@ body {
 }
 
 main#root {
+    // h1 {
+    //     // font-size: $h1-size;
+    //     // font-weight: 700;
+    //     font-family: "Space Grotesk";
+    //     font-size: 32px !important;
+    //     text-align: left;
+    //     margin-bottom: 1rem;
+    //     font-weight: 500 !important;
+    //     line-height: 20px;
+    //     letter-spacing: 0em;
+    //     text-align: left;
+    // }
+
     h1 {
-        font-size: $h1-size;
-        font-weight: 700;
+        font-family: "Space Grotesk";
+        font-size: 32px !important;
+        font-weight: 500 !important;
+        text-align: left;
+        line-height: 40.83px;
+        letter-spacing: 0em;
     }
 
     h2 {

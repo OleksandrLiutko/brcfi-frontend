@@ -37,7 +37,7 @@ function Aside({ setToggleMobileMenu }) {
     }
     return (
         <aside className={`app__menu`}>
-            <figure className="logo__container_aside hide-mobile gap-3" onClick={() => { navigate('/') }}>
+            <figure className="logo__container_aside hide-mobile gap-3 opacity-40" onClick={() => { navigate('/') }}>
                 {/* <img
                     src={logo} alt="logo"
                     width={200}

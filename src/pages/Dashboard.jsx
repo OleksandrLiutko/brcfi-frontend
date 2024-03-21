@@ -40,7 +40,7 @@ const options = {
             display: false,
         },
         y: {
-            display: false,
+            display: true,
         },
     },
 };
@@ -53,7 +53,7 @@ const defaultData = {
     datasets: [
         {
             data: [0, 0, 0, 0, 0, 0, 0],
-            borderColor: "#448AFF",
+            borderColor: "#F7931A", //"#448AFF",
             // backgroundColor: "rgb(105, 0, 255,0.3)",
             // fill: true,
 
@@ -61,8 +61,11 @@ const defaultData = {
             backgroundColor: (context) => {
                 const ctx = context.chart.ctx;
                 const gradient = ctx.createLinearGradient(0, 0, 0, ctx.canvas.height);
-                gradient.addColorStop(0, "#448AFF");
-                gradient.addColorStop(1, "#448AFF10");
+                // gradient.addColorStop(0, "#448AFF");
+                // gradient.addColorStop(1, "#448AFF10");
+                gradient.addColorStop(0, "#FFBB3720")
+                gradient.addColorStop(0.01, "#FFBB3710")
+                gradient.addColorStop(1, "#FFBB3700")
                 return gradient;
             },
             lineTension: 1,
@@ -87,19 +90,20 @@ function Dashboard() {
             datasets: [
                 {
                     data: chartData[period].map((row) => row[1]),
-                    borderColor: "#F7931A", //"#448AFF",
+                    borderColor: "#F7931A", //"#448AFF",border: 1.1px solid #F7931A
                     fill: "start",
                     backgroundColor: (context) => {
                         const ctx = context.chart.ctx;
-                        const gradient = ctx.createLinearGradient(0, 0, 0, 400);
-                        gradient.addColorStop(0, "#448AFF");
-                        gradient.addColorStop(1, "#448AFF10");
-                        // gradient.addColorStop(0, "rgba(168, 85, 247, 0.32)")
-                        // gradient.addColorStop(1, "rgba(168, 85, 247, 0.16)")
-                        // gradient.addColorStop(2, "rgba(0, 0, 0, 0)")
+                        const gradient = ctx.createLinearGradient(0, 0, 0, ctx.canvas.height);
+                        // gradient.addColorStop(0, "#448AFF");
+                        // gradient.addColorStop(1, "#448AFF10");
+                        gradient.addColorStop(0, "#FFBB3720")
+                        gradient.addColorStop(0.01, "#FFBB3710")
+                        gradient.addColorStop(1, "#FFBB3700")
 
                         // background: linear-gradient(180deg, rgba(168, 85, 247, 0.32) 0%, rgba(168, 85, 247, 0.16) 0.01%, rgba(0, 0, 0, 0) 100.07%);
 
+                        // background: linear-gradient(180deg, #FFBB37 0%, rgba(255, 187, 55, 0.16) 0.01%, rgba(255, 187, 55, 0) 100.07%);
                         return gradient;
                     },
                     lineTension: 0.4,
@@ -116,7 +120,7 @@ function Dashboard() {
         setPercent(negative + pro.toFixed(2) + '%')
     }, [chartData, period]);
     return (
-        <section className="dashboard__container flex flex-col gap-y-10">
+        <section className="dashboard__container">
             <h1>Dashboard</h1>
             {/* <p>Buy, Trade, Hold, Lend, Borrow, Explore and Launch on BrcFi</p> */}
 
@@ -130,7 +134,6 @@ function Dashboard() {
                     <RightArrow />
                     {/* <div className="text-[24px] leading-[24px] text-[#6F767E]">{'->'}</div> */}
                 </Link>
-
                 <Link to="/Liquidity" className="card glass-effect">
                     <div className="flex items-center swap-icon">
                         {/* <img src={BitcoinIcon} width={40} height={40}/> */}
@@ -159,7 +162,7 @@ function Dashboard() {
                             <img className="w-[56px] h-[56px]" src={OrdiIcon} />
                             <div className="flex flex-col justify-center">
                                 <h3 className="p-[2px]">ORDI</h3>
-                                <p className="p-[2px]">Market Capped at 60.00 USD</p>
+                                <p className="p-[2px]">Market Capped at {currentPrice} USD</p>
                             </div>
                         </div>
 

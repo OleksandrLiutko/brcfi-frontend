@@ -2,18 +2,20 @@
     position: relative;
 
     h3 {
-        text-align: center;
+        text-align: left;
+        font-size: 20px;
+        padding-bottom: 20px;
     }
 
     .table__content {
-        background-color: #ffffff65;
-        border-radius: 8px;
+        background-color: #ffffff22;
+        border-radius: 16px;
         padding: 2rem 1rem;
         font-size: 14px;
         font-family: inherit;
 
         .dark-theme & {
-            background-color: #1A1D1F;
+            background-color: #ffffff22; //#1A1D1F;
         }
 
         h3 {
