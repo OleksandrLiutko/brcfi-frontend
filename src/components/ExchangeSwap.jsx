@@ -7,6 +7,7 @@ import DataTable from "./DataTable";
 import ExchangeSelect from "./ExchangeSelect";
 import ExchangeSelectToken from "./ExchangeSelectToken";
 import CancelIcon from "../assets/icons/CancelIcon";
+import PosChangeIcon from "../assets/icons/PosChangeIcon";
 import { useModalState } from "../context/ModalContext";
 import ReactPortal from "./ReactPortal";
 import Filters from "./Filters";
@@ -418,66 +419,19 @@ function ExchangeSwap() {
           </section>
         </ReactPortal>
       )}
-      <section className="exchange__container-swap glass-effect center-margin">
+      <h2>Swap</h2>
+      <section className="exchange__container-swap center-margin">
         <header>
           <div>
-            <h2>Swap</h2>
-            <p>Trade tokens in an instant</p>
-            {/* <p style={{color: "red"}}>please contact me on Telegram. <a href="https://t.me/@crypto0405" target="_blank">Nestor: @crypto0405</a></p> */}
+            <h2>Trade tokens</h2>
+            {/* <p>Trade tokens in an instant</p> */}
           </div>
-          <hr />
-          {/* <div className="btn-actions">
-            <button className="setting__wrapper">
-              <SettingsIcon onClick={handleSettingsOpen} />
-
-              {toggleSetting && (
-                <div
-                  tabIndex={0}
-                  className="setting__menu"
-                  onBlur={handleSettingBlur}
-                  ref={settingRef}
-                >
-                  <p className="">
-                    Settings <CancelIcon onClick={handleSettingsClose} />
-                  </p>
-
-                  <p className="my-4">Slippage Tolerance</p>
-
-                  <div className="tabs tabs-boxed">
-                    <button
-                      className={`tab ${percentage === 1 ? "tab-active" : ""
-                        }`}
-                      onClick={() => setPercentage(1)}
-                    >
-                      0.5%
-                    </button>
-                    <button
-                      className={`tab ${percentage === 2 ? "tab-active" : ""
-                        }`}
-                      onClick={() => setPercentage(2)}
-                    >
-                      2.5%
-                    </button>
-                    <button
-                      className={`tab ${percentage === 3 ? "tab-active" : ""
-                        }`}
-                      onClick={() => setPercentage(3)}
-                    >
-                      5%
-                    </button>
-                  </div>
-                </div>
-              )}
-            </button>
-            <button>
-              <RefreshIcon />
-            </button>
-          </div> */}
+          {/* <hr /> */}
         </header>
 
         <div className="swap__form center-margin">
-          <div className="mb-3 flex gap-8 relative">
-            <div className="swap-position w-[42px] h-[42px] flex items-center justify-center absolute z-10 text-[20px] rounded-full bg-white border cursor-pointer top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+          <div className="mb-3 flex flex-1 gap-[2px] relative">
+            <div className="swap-position w-[40px] h-[40px] flex items-center justify-center absolute z-10 text-[20px] rounded-full bg-white border cursor-pointer top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
               onClick={() => {
                 setPosChange(prev => !prev)
                 const temp = tokenOne
@@ -489,9 +443,11 @@ function ExchangeSwap() {
                 // console.log("poschange", tokenTwoAmount, tempAmount)
               }}
             >
-              {'<->'}
+              {/* {'<->'} */}
+              <PosChangeIcon />
             </div>
             {!posChange &&
+            <div className="w-full coin-container rounded-s-2xl flex flex-col gap-6 px-[20px] pb-[20px]">
               <ExchangeSelectToken
                 amount={tokenOneAmount}
                 setAmount={onChangeTokenOneAmount}
@@ -504,7 +460,14 @@ function ExchangeSwap() {
                 selectIcon={ordinals}
                 tokenDataList={tokenDataList}
               />
+              <p className="">Balance: </p>
+              <div className="input-container flex">
+                <input className="pl-[16px] w-full" type="number" name="" id="" placeholder="0.00"/>
+                <button className="pr-[16px]">Max</button>
+              </div>
+            </div>
             }
+            <div className="w-full coin-container rounded-r-2xl flex flex-col gap-6 px-[20px] pb-[20px]">
             <ExchangeSelectToken
               amount={result ? tokenTwo.ticker == 'BTC' ? (result.out_token_amount / 1e8).toFixed(8) : result.out_token_amount : ''}
               setAmount={setTokenTwoAmount}
@@ -517,7 +480,15 @@ function ExchangeSwap() {
               inputDisabled={true}
               tokenDataList={tokenDataList}
             />
+            <p className="w-full text-right">Balance: </p>
+            <div className="input-container flex">
+              <input className="pl-[16px] w-full" type="number" name="" id="" placeholder="0.00"/>
+              {/* <button className="pr-[16px]">Max</button> */}
+            </div>
+            </div>
             {posChange &&
+            <div className="w-full coin-container rounded-s-2xl flex flex-col gap-6 px-[20px] pb-[20px]">
+
               <ExchangeSelectToken
                 amount={tokenOneAmount}
                 setAmount={onChangeTokenOneAmount}
@@ -530,25 +501,16 @@ function ExchangeSwap() {
                 selectIcon={ordinals}
                 tokenDataList={tokenDataList}
               />
+              <p className="w-full text-left">Balance: </p>
+            <div className="input-container flex">
+              <input className="pl-[16px] w-full" type="number" name="" id="" placeholder="0.00"/>
+              {/* <button className="pr-[16px]">Max</button> */}
+            </div>
+            </div>
             }
           </div>
-          <hr />
-          {/* {true &&
-            <ExchangeSelect
-              amount={tokenOneAmount}
-              setAmount={onChangeTokenOneAmount}
-              token={tokenOne}
-              setToken={setTokenOne}
-              list={poolTokenLists[0]}
-              selectText={"Select Token"}
-              bordered={true}
-              label="Swap from"
-              selectIcon={ordinals}
-              inputDisabled={!currentPool}
-              tokenDataList={tokenDataList}
-            />
-          } */}
-          {true && 
+          {/* <hr /> */}
+          {/* {true && 
             <>
               <ExchangeSelect
                 amount={tokenOneAmount}
@@ -580,7 +542,7 @@ function ExchangeSwap() {
               inputDisabled={true}
               tokenDataList={tokenDataList}
             />
-          }
+          } */}
           {/* {posChange &&
             <ExchangeSelect
               amount={tokenTwoAmount}
@@ -618,7 +580,7 @@ function ExchangeSwap() {
         {/* <header className="flex items-center">
           <Filters />
         </header> */}
-
+        <h3>Swap Order</h3>
         <DataTable
           title="Swap Order List"
           type={4}

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import SettingsIcon from "../assets/icons/SettingsIcon";
 import RefreshIcon from "../assets/icons/RefreshIcon";
 import arrowDown from "../assets/icons/arrowDown.svg";
+import PosChangeIcon from "../assets/icons/PosChangeIcon";
 import ordinals from "../assets/icons/ordinals.svg";
 import ExchangeSelect from "../components/ExchangeSelect";
 import DataTable from "../components/DataTable";
@@ -258,16 +259,16 @@ function Pool() {
         )
         }
         <section className="pool__container">
-
+            <h1>Pool</h1>
             <section className="pool__content glass-effect center-margin">
 
                 <h2 className="text-center !text-[28px]">Create a new pool</h2>
 
-                <hr className="my-[2rem]" />
+                {/* <hr className="my-[2rem]" /> */}
 
                 <div className="swap__form center-margin">
                     <div className="mb-3 flex gap-8 relative">
-                        <div className="swap-position w-[42px] h-[42px] flex items-center justify-center absolute z-10 text-[20px] rounded-full bg-white border cursor-pointer top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+                        <div className="swap-position w-[40px] h-[40px] flex items-center justify-center absolute z-10 text-[20px] rounded-full bg-white border cursor-pointer top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
                             onClick={() => {
                                 setPosChange(prev => !prev)
                                 const temp = tokenOne
@@ -275,9 +276,12 @@ function Pool() {
                                 setTokenTwo(temp)
                             }}
                         >
-                            {'<->'}
+                            {/* {'<->'} */}
+                            <PosChangeIcon />
                         </div>
                         {!posChange &&
+            <div className="w-full coin-container rounded-l-2xl flex flex-col gap-6 px-[20px] pb-[20px]">
+
                             <ExchangeSelectToken
                                 token={tokenOne}
                                 setToken={setTokenOne}
@@ -289,7 +293,15 @@ function Pool() {
                                 selectIcon={ordinals}
                                 tokenDataList={tokenDataList}
                             />
+                            
+            <p className="w-full text-left">Balance: </p>
+            <div className="input-container flex">
+              <input className="pl-[16px] w-full" type="number" name="" id="" placeholder="0.00"/>
+              {/* <button className="pr-[16px]">Max</button> */}
+            </div>
+            </div>
                         }
+                        <div className="w-full coin-container rounded-l-2xl flex flex-col gap-6 px-[20px] pb-[20px]">
                         <ExchangeSelectToken
                             token={posChange? tokenOne : tokenTwo}
                             setToken={posChange? setTokenOne: setTokenTwo}
@@ -301,7 +313,15 @@ function Pool() {
                             inputDisabled={true}
                             tokenDataList={tokenDataList}
                         />
+                        <p className="w-full text-left">Balance: </p>
+                        <div className="input-container flex">
+                          <input className="pl-[16px] w-full" type="number" name="" id="" placeholder="0.00"/>
+                          {/* <button className="pr-[16px]">Max</button> */}
+                        </div>
+                        </div>
+                        
                         {posChange &&
+                        <div className="w-full coin-container rounded-l-2xl flex flex-col gap-6 px-[20px] pb-[20px]">
                             <ExchangeSelectToken
                                 token={tokenTwo}
                                 setToken={setTokenTwo}
@@ -313,6 +333,13 @@ function Pool() {
                                 selectIcon={ordinals}
                                 tokenDataList={tokenDataList}
                             />
+                            
+            <p className="w-full text-left">Balance: </p>
+            <div className="input-container flex">
+              <input className="pl-[16px] w-full" type="number" name="" id="" placeholder="0.00"/>
+              {/* <button className="pr-[16px]">Max</button> */}
+            </div>
+            </div>
                         }
                     </div>
 

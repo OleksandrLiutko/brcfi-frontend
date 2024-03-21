@@ -10,10 +10,9 @@
 
     height: max-content;
     top: 0;
-    border: 0.5px solid #FFFFFF;
     border-radius: 20px;
     backdrop-filter: blur(13.5px);
-    border-right: 1px solid rgba(255, 255, 255, 0.08);
+    border-right: 1px solid #FFFFFF14;
 
     footer {
         position: absolute;
@@ -57,7 +56,8 @@
     }
 
     .dark-theme & {
-        border: none;
+        border-right: 1px solid #FFFFFF14;
+        // border: none;
         // background-color: #1A1D1F;
         background-color: rgba(2, 6, 23, 1);
         border-radius: 0;

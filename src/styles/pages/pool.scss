@@ -1,5 +1,5 @@
 .pool__container {
-    padding: 5rem 10rem;
+    // padding: 5rem 10rem;
 
     #arrow-down {
         fill: $clr-primary;
@@ -15,14 +15,15 @@
     }
 
     .pool__content {
-        max-width: 450px;
+        max-width: 512px;
+        width: 512px;
         padding: 4rem;
         border-radius: $border-radius;
         margin-bottom: 10rem;
-        background-color: #ffffff65;
+        background-color: #00000052; //#ffffff65;
     
         .dark-theme & {
-            background: #1A1D1F;
+            background: #00000052; //#1A1D1F;
         }
 
         header {
@@ -72,7 +73,7 @@
     }
 
     @media only screen and (max-width: 1660px) {
-        padding: 5rem;
+        // padding: 5rem;
 
         .pool__content {
             // width: 100%;

@@ -1,11 +1,14 @@
 .dashboard__container {
-    padding: 3rem;
-
+    
     h1 {
-        font-size: 37px !important;
-        text-align: center;
+        font-family: "Space Grotesk";
+        font-size: 32px !important;
+        text-align: left;
         margin-bottom: 1rem;
-        font-weight: 400 !important;
+        font-weight: 500 !important;
+        line-height: 20px;
+        letter-spacing: 0em;
+        text-align: left;
     }
 
     &>p {
@@ -21,7 +24,7 @@
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
-        gap: 1.5rem;
+        gap: 16px; //1.5rem;
 
         margin-bottom: 1.5rem;
 
@@ -33,19 +36,25 @@
             flex-direction: row;
             align-items: center;
             justify-content: space-between;
-            padding: 26px 32px;
+            padding: 20px; //26px 32px;
 
             .dark-theme & {
-                background-color: #1A1D1F !important;
+                background-color: #00000052 !important; //#1A1D1F !important;
                 border: none;
             }
 
             h3 {
                 padding-left: 16px;
+                font-family: "Space Grotesk";
+                font-size: 16px !important;
+                font-weight: 500 !important;
+                line-height: 20px;
+                letter-spacing: 0em;
+                text-align: left;
             }
 
             svg {
-                height: 51px;
+                // height: 51px;
             }
 
             .exchange-icon svg {
@@ -65,8 +74,8 @@
 
     .content {
         gap: 1.5rem;
-        display: grid;
-        grid-template-columns: 2fr 1fr;
+        display: flex;
+        // grid-template-columns: 2fr;// 1fr;
 
         &__info {
             margin-top: 0px;
@@ -74,7 +83,7 @@
             section {
                 padding: 3rem;
                 border-radius: $border-radius;
-                background-color: #ffffff65;
+                // background-color: #ffffff65;
 
                 .dark-theme & {
                     background-color: #1A1D1F;
@@ -101,29 +110,30 @@
 
         &__detail {
             flex: 1;
-            border-radius: $border-radius;
+            // border-radius: $border-radius;
             position: relative;
-            background-color: #ffffff65;
+            // background-color: #ffffff65;
 
             .dark-theme & {
-                background-color: #1A1D1F;
+                // background-color: #1A1D1F;
                 border: none;
             }
 
             header {
-                margin: 2rem;
+                // margin: 2rem;
 
                 display: flex;
                 justify-content: space-between;
-                align-items: flex-start;
+                // align-items: center;
 
                 .left {
                     display: flex;
+                    align-items: center;
                     gap: 1rem;
 
-                    img {
-                        width: 4rem;
-                    }
+                    // img {
+                    //     width: 4rem;
+                    // }
 
                     h3 {
                         display: flex;
@@ -136,30 +146,34 @@
                         font-weight: 300;
                     }
                 }
-
-                .btn {
+                
+                .time-btn {
+                    width: 72px;
+                    height: 40px;
                     padding: 8px 10px;
-                    font-size: 14px;
-                    font-weight: 400;
+                    font-family: "Space Grotesk";
+                    font-size: 12px;
+                    font-weight: 500;
+                    line-height: 15px;
+                    letter-spacing: 0em;
+                    text-align: center;
                     color: $clr-text;
-                    border-radius: 8px;
+                    border-radius: 32px;
                     border: none;
                     background-color: transparent;
                 }
 
                 .btn-group {
-                    border-radius: 8px;
-                    padding: 5px;
-                    border: 1px solid #C6C6C6;
+                    border-radius: 32px;
+                    padding: 4px 16px;
+                    // border: 1px solid 
+                    border: 1px solid #FFFFFF14; //#C6C6C6;
                     background-color: transparent;
+                    gap: 1rem;
 
                     .dark-theme & {
                         border-color: #3C4145;
                     }
-                }
-
-                .btn-group {
-                    gap: 1rem;
                 }
 
                 .btn-active,
@@ -168,7 +182,8 @@
                     color: $clr-white;
 
                     .dark-theme & {
-                        background-color: #448AFF;
+                        
+                        background-color: #F7931A; //#448AFF;
                     }
                 }
             }
@@ -208,9 +223,9 @@
         .content {
             display: block;
 
-            .btn-group {
-                margin-top: 20px;
-            }
+            // .btn-group {
+            //     margin-top: 20px;
+            // }
         }
     }
 

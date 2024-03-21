@@ -11,27 +11,32 @@
         width: 100%;
 
         .dark-theme & {
-            background-color: #448AFF;
+            background-color: #F7931A; //#448AFF;background: #F7931A;
+
         }
     }
 
     .swap-position {
-        color: #6F767E;
-        background-color: white;
+        // color: #6F767E;
+        // background-color: white;
+        background: #84CC16;
+        border: 4px solid #00000029;
 
         .dark-theme & {
-            background-color: #272B30;
-            border-color: #3C4145;
+            // background-color: #272B30;
+            // border-color: #3C4145;
+            background: #84CC16;
+            border: 4px solid #00000029;
         }
     }
 }
 
 .select-item {
-    border: 1px solid #EEF2F5;
-    background-color: white;
+    // border: 1px solid #EEF2F5;
+    background-color: #00000052; //white;
 
     .dark-theme & {
-        border: 1px solid #3C4145;
-        background-color: #272B30;
+        // border: 1px solid #3C4145;
+        background-color: #00000052; //#272B30;
     }
 }

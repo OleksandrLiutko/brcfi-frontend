@@ -2,7 +2,7 @@
     margin-bottom: 10rem;
 
     display: grid;
-    grid-template-columns: 312px 1fr;
+    grid-template-columns: 256px 1fr;
 
     // background-color: getColor(backgroundDim);
 
@@ -20,12 +20,20 @@
 }
 
 .main__content {
+    background-color: #020617;
+    background-image: url(../assets/images/bg-content.png);
+    // background-repeat: round;
+    background-position: center;
+    padding: 32px;
+    gap: 40px;
+
     position: relative;
     min-height: calc(100% - 13rem);
     border: none;
-    height: max-content;
+    height: 100%; //max-content;
     width: 100%;
     overflow-x: scroll;
+    line-height: 1 !important;
 
     /* Target the scrollbar */
     &::-webkit-scrollbar {

@@ -111,7 +111,7 @@ function DataTable({ title = "", type, dataSource, columns }) {
   </>
   ) : (
     <div className="table__content overflow-x-auto">
-      <h3>{title}</h3>
+      {/* <h3>{title}</h3> */}
       {data.length > 0 ? (
         <>
           <table className="table">

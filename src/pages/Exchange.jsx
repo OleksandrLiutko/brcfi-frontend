@@ -17,6 +17,7 @@ function Exchange() {
 
     return (
         <section className="exchange__container">
+            <h2>Liquidity</h2>
             <section className="top relative">
                 <section className="btn-actions absolute left-1/2 transform -translate-x-1/2 top-[2.5rem]">
                     {/* <button

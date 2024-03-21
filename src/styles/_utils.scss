@@ -15,7 +15,7 @@
     user-select: none;
     cursor: pointer;
     padding: 1.5rem 4.5rem;
-    border-radius: 4rem;
+    border-radius: 32px;
     transition: 0.25s;
 }
 
@@ -57,7 +57,7 @@
     padding-right: 3rem;
     text-align: left;
     font-weight: 600;
-    border-radius: 16px;
+    border-radius: 32px;
 
     // &:hover,
     &:active,

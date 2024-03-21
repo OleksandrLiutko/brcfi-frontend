@@ -21,6 +21,7 @@ import OrderStatus from "./customComponents/OrderStatus";
 import useLPAmount from "../hooks/useLPAmount";
 import ExchangeSelectToken from "./ExchangeSelectToken";
 import Modal from "./Modal";
+import PosChangeIcon from "../assets/icons/PosChangeIcon";
 
 
 const columnHelper = createColumnHelper();
@@ -357,7 +358,7 @@ function ExchangeAddLiquidity() {
                 </ReactPortal >
             )}
             <section className="exchange__container-swap glass-effect center-margin pt-[10rem]">
-                <h2 className="text-center !text-[28px]">Add liquidity </h2>
+                <h3 className="text-left !text-[20px]">Add liquidity </h3>
 
                 <hr className="my-[2rem]" />
                 <div className="mb-3 flex gap-8 relative">
@@ -372,33 +373,51 @@ function ExchangeAddLiquidity() {
                             setTokenTwoAmount(tempAmount)
                         }}
                     >
-                        {'<->'}
+                        {/* {'<->'} */}
+                        <PosChangeIcon />
                     </div>
                     {!posChange &&
+                        <div className="w-full coin-container rounded-s-2xl flex flex-col gap-6 px-[20px] pb-[20px]">
+                            <ExchangeSelectToken
+                                amount={tokenOneAmount}
+                                setAmount={setTokenOneAmount}
+                                token={tokenOne}
+                                setToken={setTokenOne}
+                                list={tokenSelectList[0]}
+                                selectText={"Select Token"}
+                                bordered={true}
+                                selectIcon={ordinals}
+                                tokenDataList={tokenDataList}
+                            />
+                            <p className="w-full text-left">Balance: </p>
+                            <div className="input-container flex">
+                                <input className="pl-[16px] w-full" type="number" name="" id="" placeholder="0.00"/>
+                            {/* <button className="pr-[16px]">Max</button> */}
+                            </div>
+                        </div>
+                    }
+                    <div className="w-full coin-container rounded-s-2xl flex flex-col gap-6 px-[20px] pb-[20px]">
+
                         <ExchangeSelectToken
-                            amount={tokenOneAmount}
-                            setAmount={setTokenOneAmount}
-                            token={tokenOne}
-                            setToken={setTokenOne}
-                            list={tokenSelectList[0]}
+                            amount={result ? tokenTwo.ticker == 'BTC' ? (result.out_token_amount / 1e8).toFixed(8) : result.out_token_amount : ''}
+                            setAmount={setTokenTwoAmount}
+                            token={posChange ? tokenOne : tokenTwo}
+                            setToken={posChange ? setTokenOne : setTokenTwo}
+                            list={posChange ? tokenSelectList[0] : tokenSelectList[1]}
                             selectText={"Select Token"}
                             bordered={true}
-                            selectIcon={ordinals}
+                            inputDisabled={true}
                             tokenDataList={tokenDataList}
                         />
-                    }
-                    <ExchangeSelectToken
-                        amount={result ? tokenTwo.ticker == 'BTC' ? (result.out_token_amount / 1e8).toFixed(8) : result.out_token_amount : ''}
-                        setAmount={setTokenTwoAmount}
-                        token={posChange ? tokenOne : tokenTwo}
-                        setToken={posChange ? setTokenOne : setTokenTwo}
-                        list={posChange ? tokenSelectList[0] : tokenSelectList[1]}
-                        selectText={"Select Token"}
-                        bordered={true}
-                        inputDisabled={true}
-                        tokenDataList={tokenDataList}
-                    />
+                    
+                        <p className="w-full text-left">Balance: </p>
+                        <div className="input-container flex">
+                            <input className="pl-[16px] w-full" type="number" name="" id="" placeholder="0.00"/>
+                        {/* <button className="pr-[16px]">Max</button> */}
+                        </div>
+                    </div>
                     {posChange &&
+                    <div className="w-full coin-container rounded-s-2xl flex flex-col gap-6 px-[20px] pb-[20px]">
                         <ExchangeSelectToken
                             amount={tokenOneAmount}
                             setAmount={setTokenOneAmount}
@@ -410,13 +429,19 @@ function ExchangeAddLiquidity() {
                             selectIcon={ordinals}
                             tokenDataList={tokenDataList}
                         />
+                        <p className="w-full text-left">Balance: </p>
+                        <div className="input-container flex">
+                            <input className="pl-[16px] w-full" type="number" name="" id="" placeholder="0.00"/>
+                        {/* <button className="pr-[16px]">Max</button> */}
+                        </div>
+                    </div>
                     }
                 </div>
-                <hr className="my-[2rem]" />
+                {/* <hr className="my-[2rem]" /> */}
 
                 <div className="swap__form center-margin full-w-select">
 
-                    <ExchangeSelect
+                    {/* <ExchangeSelect
                         amount={tokenOneAmount}
                         setAmount={onChangeTokenOneAmount}
                         token={tokenOne}
@@ -427,9 +452,9 @@ function ExchangeAddLiquidity() {
                         selectIcon={ordinals}
                         tokenDataList={tokenDataList}
                         showBalance={true}
-                    />
+                    /> */}
 
-                    <ExchangeSelect
+                    {/* <ExchangeSelect
                         token={tokenTwo}
                         amount={tokenTwoAmount}
                         setAmount={onChangeTokenTwoAmount}
@@ -440,7 +465,7 @@ function ExchangeAddLiquidity() {
                         selectIcon={ordinals}
                         tokenDataList={tokenDataList}
                         showBalance={true}
-                    />
+                    /> */}
 
                     <AddLiquidityBtn />
                 </div>

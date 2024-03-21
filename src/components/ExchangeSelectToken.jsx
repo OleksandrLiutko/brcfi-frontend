@@ -56,12 +56,12 @@ function ExchangeSelectToken({ amount, setAmount, token, setToken, list, tokenDa
 
     return (
         <>
-            <div className="select-item relative text-[14px] py-[15px] px-[20px] cursor-pointer w-full rounded-[8px]"
+            <div className="relative text-[14px] py-[15px] cursor-pointer w-full rounded-l-lg"
                 onClick={handleToggleDataList}
             >
-                <div className="mb-3">{label}</div>
+                <div className="mb-5">{label}</div>
                 <div className="flex items-center">
-                    <img className="w-[32px] h-[32px] icon" src={selectedOption?.ticker === 'BTC' ? btcIcon : selectedOption?.ticker === 'BZFI'? brcfiIcon : (() => {
+                    <img className="w-[56px] h-[56px] icon" src={selectedOption?.ticker === 'BTC' ? btcIcon : selectedOption?.ticker === 'BZFI'? brcfiIcon : (() => {
                             const selectedItem = tokenDataList?.filter(item => item.symbol.toLowerCase() === selectedOption?.ticker?.toLowerCase());
                             if (selectedItem && selectedItem.length > 0) {
                                 return selectedItem[0].iconUrl + "?size=30x30";
@@ -69,10 +69,11 @@ function ExchangeSelectToken({ amount, setAmount, token, setToken, list, tokenDa
                             return ordinalIcon;
                         })()} alt=""  style={{borderRadius: "50%"}} />
                     <div className="pl-3">
-                        <div className="font-bold">{selectedOption?.ticker || "Select"}</div>
+                        <div className="font-bold mb-5">{selectedOption?.ticker || "Select"}</div>
                         <div className="text-[12px] text-[#6F767E]">{selectedOption?.ticker === 'BTC' ? "On Bitcoin" : "Ordinal"}</div>
                     </div>
                 </div>
+
                 <div className="">
                     {
                         !disabled && <DataList

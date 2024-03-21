@@ -8,7 +8,7 @@ $clr-black: #1A1D1F;
 $clr-white: #ffffff;
 $clr-black-light: #373737;
 
-$clr-text: $clr-black;
+$clr-text: $clr-white;
 $clr-background: $clr-white;
 $clr-primary: $clr-purple;
 
@@ -19,20 +19,20 @@ $clr-box-shadow: rgba(0, 0, 0, 0.11);
 
 $box-shadow: inset 0px 1px 2px #FFFFFF;
 
-$font-family: "Inter", "League Spartan", sans-serif;
+$font-family: 'Space Grotesk', 'Inter', 'League Spartan', sans-serif;
 
 $h1-size: 4.5rem;
 $h2-size: 3.5rem;
 $h3-size: 2.8rem;
 $p-size: 2rem; /* LINE HEIGHT IN PARA 3rem */
 
-$border-radius: 15px;
+$border-radius: 16px;
 $border-color: #f0f0f0;
 
 $header-size: 106px;
 
 $colors: (
-    base: rgba(255, 255, 255, 0.4),
+    base: #00000052, //rgba(255, 255, 255, 0.4),
     base1: #ffffff,
     base2: #ffffff,
     text: #000,
@@ -42,12 +42,12 @@ $colors: (
 );
 //dark theme
 $colors-dark: (
-    base: #000000,
+    base: #00000052, //#000000,
     base1: #1f1e1e,
     base2: #373737,
     text: #ffffff,
     border: #373737,
-    backgroundDim: rgba(0, 0, 0, 0.5),
+    backgroundDim: #00000052, //rgba(0, 0, 0, 0.5);
     boxShadow: 0px 4px 20px gba(0, 0, 0, 0.11),
 );
 
