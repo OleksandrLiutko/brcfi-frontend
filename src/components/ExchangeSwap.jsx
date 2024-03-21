@@ -500,17 +500,13 @@ function ExchangeSwap() {
           </section>
         </ReactPortal>
       )}
-      <h1 className="swap-title">Swap</h1>
-      <section className="exchange__container-swap center-margin">
-        <header>
-          <div>
-            <h3 className="!text-left !text-[20px] !font-medium">
-              Trade tokens
-            </h3>
-            {/* <p>Trade tokens in an instant</p> */}
-          </div>
+      <h1>Swap</h1>
+      <section className="transaction__panel exchange__container-swap center-margin">
+        {/* <header> */}
+          <h2>Trade tokens</h2>
+          {/* <p>Trade tokens in an instant</p> */}
           {/* <hr /> */}
-        </header>
+        {/* </header> */}
 
         <div className="swap__form center-margin">
           <div className="mb-3 flex flex-1 gap-[2px] relative">
@@ -530,8 +526,8 @@ function ExchangeSwap() {
               {/* {'<->'} */}
               <PosChangeIcon />
             </div>
-            {!posChange && (
-              <div className={`coin-container rounded-${posChange ? "r" : "s"}-2xl`}>
+            {!posChange && 
+              <div className="coin-container rounded-s-2xl">
                 <p>From</p>
                 <ExchangeSelectToken
                   amount={tokenOneAmount}
@@ -561,9 +557,9 @@ function ExchangeSwap() {
                   </button>
                 </div>
               </div>
-            )}
+            }
             <div className={`coin-container rounded-${posChange ? "s" : "r"}-2xl`}>
-              <p  className={`!text-${posChange ? "left" : "right"}`}>{posChange ? "From" : "To"}</p>
+              <p className={`!text-${posChange ? "left" : "right"}`}>{posChange ? "From" : "To"}</p>
               <ExchangeSelectToken
                 amount={
                   result
@@ -601,7 +597,7 @@ function ExchangeSwap() {
               </div>
             </div>
             {posChange && (
-              <div className={`coin-container rounded-${posChange ? "r" : "s"}-2xl`}>
+              <div className={`coin-container rounded-r-2xl`}>
                 <p>To</p>
                 <ExchangeSelectToken
                   amount={tokenOneAmount}
@@ -699,11 +695,11 @@ function ExchangeSwap() {
         </div>
       </section>
 
-      <section className="table__container">
+      <section className="table__container flex flex-col gap-[24px]">
         {/* <header className="flex items-center">
           <Filters />
         </header> */}
-        <h3>Swap Order</h3>
+        <h2>Swap Order</h2>
         <DataTable
           title="Swap Order List"
           type={4}

@@ -78,8 +78,14 @@ main#root {
     }
 
     h2 {
-        font-size: $h2-size;
-        font-weight: 700;
+        font-family: "Space Grotesk";
+        font-size: 20px;
+        font-weight: 500;
+        line-height: 25.52px;
+        text-align: left;
+
+        // font-size: $h2-size;
+        // font-weight: 700;
     }
 
     h3 {

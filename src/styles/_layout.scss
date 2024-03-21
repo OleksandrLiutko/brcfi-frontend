@@ -62,3 +62,16 @@
     //     margin: 1rem;
     // }
 }
+
+.transaction__panel {
+    width: 512px;
+    // height: 417px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    border-radius: 16px;
+    opacity: 0px;
+    background: #00000052;
+}
+
