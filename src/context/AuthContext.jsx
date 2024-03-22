@@ -102,7 +102,7 @@ export function AuthStateProvider({ children }) {
     unconfirmed: 0,
     total: 0,
   });
-  const [network, setNetwork] = useState("testnet");
+  const [network, setNetwork] = useState("mainnet");
 
   const [tokenList, tokenSelectList, poolTokenLists, tokenBalances, tokenOne, tokenTwo, setTokenOne, setTokenTwo] = useTokenSelect(address);
   const [factoryWallet, poolList] = useLoadData(address);
@@ -146,7 +146,7 @@ export function AuthStateProvider({ children }) {
     if (!connect) return;
     try {
         const result = await window.unisat.requestAccounts();
-        await window.unisat.switchNetwork('testnet')
+        await window.unisat.switchNetwork('mainnet')
         handleAccountsChanged(result);
         setConnected(true);
         messageApi.notifySuccess('Wallet is connected!', 3)
