@@ -1,6 +1,7 @@
 .datalist__container {
     border-radius: $border-radius;
-    background-color: getColor(base1);
+    // background-color: getColor(base1);
+    background: #302018;
     overflow: hidden;
     position: absolute;
     top: 100%;
@@ -32,7 +33,7 @@
 
         input {
             color: #787E82;
-            background-color: #F1F6F9;
+            background-color: #1C1410; //#F1F6F9;
             padding: 1rem 2rem;
             padding-left: 4rem;
             border-radius: 10rem;
@@ -40,7 +41,7 @@
             font-size: 12px !important;
 
             .dark-theme & {
-                background-color: #1A1D1F;
+                background-color: #1C1410; //#1A1D1F;
             }
 
             &::placeholder {

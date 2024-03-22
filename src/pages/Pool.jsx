@@ -150,7 +150,7 @@ function Pool() {
         `Ordering new liquidity pool for ${tokenOne.ticker.toUpperCase()}/${tokenTwo.ticker.toUpperCase()}`,
         6
       );
-
+        return
       const tx_id = await unisatWallet.sendBitcoin(factoryWallet, fee);
       const body = {
         sender_address: address,
@@ -299,8 +299,8 @@ function Pool() {
       )}
       <section className="pool__container">
         <h1>Pool</h1>
-        <section className="pool__content center-margin">
-          <h2 className="text-left !text-[20px] !font-medium pb-[24px]">Create a new pool</h2>
+        <section className="transaction__panel pool__content center-margin">
+          <h2>Create a new pool</h2>
 
           <div className="swap__form center-margin">
             <div className="mb-3 flex gap-[2px] relative">
@@ -317,10 +317,12 @@ function Pool() {
                 <PosChangeIcon />
               </div>
               {!posChange && (
-                // <div className="w-full coin-container rounded-l-2xl flex flex-col gap-6 px-[20px] pb-[20px]">
                 <div
-                  className={`coin-container rounded-${posChange ? "r" : "s"}-2xl`}>
-                <p>From</p>
+                  className={`coin-container rounded-${
+                    posChange ? "r" : "s"
+                  }-2xl`}
+                >
+                  <p>From</p>
                   <ExchangeSelectToken
                     token={tokenOne}
                     setToken={setTokenOne}
@@ -335,8 +337,14 @@ function Pool() {
                 </div>
               )}
               {/* <div className="w-full coin-container rounded-l-2xl flex flex-col gap-6 px-[20px] pb-[20px]"> */}
-              <div className={`coin-container rounded-${posChange ? "s" : "r"}-2xl`}>
-                <p  className={`!text-${posChange ? "left" : "right"}`}>{posChange ? "From" : "To"}</p>
+              <div
+                className={`coin-container rounded-${
+                  posChange ? "s" : "r"
+                }-2xl`}
+              >
+                <p className={`!text-${posChange ? "left" : "right"}`}>
+                  {posChange ? "From" : "To"}
+                </p>
                 <ExchangeSelectToken
                   token={posChange ? tokenOne : tokenTwo}
                   setToken={posChange ? setTokenOne : setTokenTwo}
@@ -347,13 +355,17 @@ function Pool() {
                   value={false}
                   inputDisabled={true}
                   tokenDataList={tokenDataList}
-                />              
+                />
               </div>
 
               {posChange && (
                 // <div className="w-full coin-container rounded-l-2xl flex flex-col gap-6 px-[20px] pb-[20px]">
-                <div className={`coin-container rounded-${posChange ? "r" : "s"}-2xl`}>
-                <p className={`text-${posChange ? "right" : "left"}`}>To</p>
+                <div
+                  className={`coin-container rounded-${
+                    posChange ? "r" : "s"
+                  }-2xl`}
+                >
+                  <p className={`text-${posChange ? "right" : "left"}`}>To</p>
                   <ExchangeSelectToken
                     token={tokenTwo}
                     setToken={setTokenTwo}
@@ -370,38 +382,41 @@ function Pool() {
             </div>
             {/* <hr className="my-[1rem]" /> */}
             <div className="token__container">
-              <p className="!text-[14px] font-medium pb-[24px] !text-left">{hint}</p>
+              <p className="!text-[14px] font-medium pb-[24px] !text-left">
+                {hint}
+              </p>
               <div className="token__container__input">
                 <div className="input-container">
-                <input 
-                  type="text"
-                  name="tokenName"
-                  id="tokenName"
-                  placeholder="Token Tick"
-                  autoComplete="off"
-                  value={lPTokenTick}
-                  onChange={handleLPTokenTick}
-                  disabled={currentPool}
-                />
+                  <input
+                    type="text"
+                    name="tokenName"
+                    id="tokenName"
+                    placeholder="Token Tick"
+                    autoComplete="off"
+                    value={lPTokenTick}
+                    onChange={handleLPTokenTick}
+                    disabled={currentPool}
+                  />
                 </div>
                 <div className="input-container">
-                <input
-                  type="text"
-                  name="maxSupply"
-                  id="maxSupply"
-                  placeholder="Max Supply"
-                  autoComplete="off"
-                  value={lPMax}
-                  onChange={handleLPMax}
-                  disabled={currentPool}
-                />
+                  <input
+                    type="text"
+                    name="maxSupply"
+                    id="maxSupply"
+                    placeholder="Max Supply"
+                    autoComplete="off"
+                    value={lPMax}
+                    onChange={handleLPMax}
+                    disabled={currentPool}
+                  />
                 </div>
-                
               </div>
             </div>
             <CreatePoolBtn />
           </div>
         </section>
+
+        <h2>New pool order</h2>
 
         <section className="table__container mb-14">
           {/* <header className="flex items-center">

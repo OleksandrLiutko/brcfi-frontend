@@ -1,5 +1,8 @@
 .pool__container {
     // padding: 5rem 10rem;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
 
     #arrow-down {
         fill: $clr-primary;
@@ -15,12 +18,12 @@
     }
 
     .pool__content {
-        max-width: 512px;
-        width: 512px;
-        padding: 24px;
-        border-radius: $border-radius;
-        margin-bottom: 10rem;
-        background-color: #00000052; //#ffffff65;
+        // max-width: 512px;
+        // width: 512px;
+        // padding: 24px;
+        // border-radius: $border-radius;
+        // margin-bottom: 10rem;
+        // background-color: #00000052; //#ffffff65;
     
         .dark-theme & {
             background: #00000052; //#1A1D1F;

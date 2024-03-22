@@ -405,7 +405,7 @@ function ExchangeAddLiquidity() {
   };
 
   return (
-    <>
+    <div className="flex flex-col gap-[24px] ">
       {showFeeReteModal && (
         <Modal onClose={onCloseFeeRateModal} onConfirm={onConfirmFeeRate} />
       )}
@@ -436,7 +436,7 @@ function ExchangeAddLiquidity() {
         </ReactPortal>
       )}
       <section className="flex flex-col gap-[24px] exchange__container-swap center-margin pt-[120px]">
-        <h3 className="text-left !text-[20px] pl-[8px]">Add liquidity </h3>
+        <h2>Add liquidity </h2>
 
         {/* <hr className="my-[2rem]" /> */}
         <div className="mb-3 flex gap-[2px] relative">
@@ -456,9 +456,7 @@ function ExchangeAddLiquidity() {
             <PosChangeIcon />
           </div>
           {!posChange && (
-            <div
-              className={`coin-container rounded-${posChange ? "r" : "s"}-2xl`}
-            >
+            <div className={`coin-container rounded-${posChange ? "r" : "s"}-2xl`}>
               <p>From</p>
               <ExchangeSelectToken
                 amount={tokenOneAmount}
@@ -470,8 +468,9 @@ function ExchangeAddLiquidity() {
                 bordered={true}
                 selectIcon={ordinals}
                 tokenDataList={tokenDataList}
+                label="From"
               />
-              <p className={`text-${posChange ? "right" : "left"}`}>
+              <p className="text-left">
                 Balance:{" "}
               </p>
               <div className="input-container flex">
@@ -508,9 +507,10 @@ function ExchangeAddLiquidity() {
               bordered={true}
               inputDisabled={true}
               tokenDataList={tokenDataList}
+              label={posChange ? "From" : "To"}
             />
 
-            <p className="w-full text-left">Balance: </p>
+            <p className={`text-${posChange ? "left" : "right"}`}>Balance: </p>
             <div className="input-container flex">
               <input
                 className="pl-[16px] w-full"
@@ -520,6 +520,8 @@ function ExchangeAddLiquidity() {
                 placeholder="0.00"
               />
               {/* <button className="pr-[16px]">Max</button> */}
+              {posChange && <button className="pr-[16px] text-[14px] font-medium text-[#F7931A]">Max</button>}
+              
             </div>
           </div>
           {posChange && (
@@ -537,10 +539,9 @@ function ExchangeAddLiquidity() {
                 bordered={true}
                 selectIcon={ordinals}
                 tokenDataList={tokenDataList}
+                label="To"
               />
-              <p className={`text-${posChange ? "right" : "left"}`}>
-                Balance:{" "}
-              </p>
+              <p className="text-right">Balance:{" "}</p>
 
               <div className="input-container flex">
                 <input
@@ -588,11 +589,11 @@ function ExchangeAddLiquidity() {
         </div>
       </section>
 
+      <h2>Add Liquidity Order</h2>
       <section className="table__container">
         {/* <header className="flex items-center">
                     <Filters />
                 </header> */}
-
         <DataTable
           title="Add liquidity Order List"
           type={2}
@@ -600,7 +601,7 @@ function ExchangeAddLiquidity() {
           columns={columns}
         />
       </section>
-    </>
+    </div>
   );
 }
 

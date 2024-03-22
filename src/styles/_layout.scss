@@ -75,3 +75,12 @@
     background: #00000052;
 }
 
+.coin-container {    
+    background-color: #00000052;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 20px;
+    padding: 20px;
+}

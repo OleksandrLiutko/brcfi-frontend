@@ -598,7 +598,7 @@ function ExchangeSwap() {
             </div>
             {posChange && (
               <div className={`coin-container rounded-r-2xl`}>
-                <p>To</p>
+                <p className="text-right">To</p>
                 <ExchangeSelectToken
                   amount={tokenOneAmount}
                   setAmount={onChangeTokenOneAmount}

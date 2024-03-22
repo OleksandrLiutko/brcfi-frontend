@@ -287,7 +287,7 @@ function ExchageRemoveLiquidity() {
     }
 
     return (
-        <>
+        <div className="flex flex-col gap-[24px]">
             {showFeeReteModal && <Modal onClose={onCloseFeeRateModal} onConfirm={onConfirmFeeRate} />}
             {modalState.open && (
                 <ReactPortal>
@@ -306,12 +306,12 @@ function ExchageRemoveLiquidity() {
                     </section>
                 </ReactPortal >
             )}
-            <section className="exchange__container-swap glass-effect center-margin">
-                <h2 className="text-center !text-[28px] mt-[7rem]">Remove liquidity </h2>
+            <section className="exchange__container-swap glass-effect center-margin pt-[120px]">
+                <h2>Remove liquidity </h2>
 
                 <div className="swap__form center-margin full-w-select">
 
-                    <p className="text-center !text-[16px] text-[#6F767E]">Select LP Token to Remove</p>
+                    <p className="!text-[16px] text-[#6F767E]">Select LP Token to Remove</p>
                     <ExchangeSelect
                         amount={lPAmount}
                         setAmount={setLPAmount}
@@ -405,7 +405,7 @@ function ExchageRemoveLiquidity() {
                     columns={columns}
                 />
             </section>
-        </>
+        </div>
     );
 }
 
