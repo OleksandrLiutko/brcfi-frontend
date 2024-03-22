@@ -6,8 +6,11 @@
 
 .Toastify__toast-container {
     width: max-content !important;
-    top: 14rem !important;
-    right: 10rem !important;
+    // top: 14rem !important;
+    // right: 10rem !important;
+    
+    top: 12rem !important; //15rem !important;
+    right: 5rem !important; //6rem !important;
 }
 
 .Toastify__toast,
@@ -46,7 +49,7 @@
 
     .msg__icon {
         background-color: var(--main-clr);
-        padding: 1rem; // 1rem 3rem;
+        padding: 0.5rem; // 1rem 3rem;
 
         display: flex;
         align-items: center;
@@ -63,7 +66,7 @@
         // font-size: 3rem;
         padding: 1rem 2rem;
         padding-right: 7rem;
-        font-size: 2.5rem;
+        font-size: 2rem; //2.5rem;
         background-color: getColor(base1);
         width: 100%;
         display: flex;
@@ -87,33 +90,38 @@
 
 @media only screen and (max-width: 1280px) {
     .Toastify__toast-container {
-        top: 15rem !important;
-        right: 6rem !important;
+        top: 12rem !important; //15rem !important;
+        right: 5rem !important; //6rem !important;
     }
 }
 
 @media only screen and (max-width: 1030px) {
     .Toastify__toast-container {
-        top: 15rem !important;
-        right: 3rem !important;
+        // top: 15rem !important;
+        // right: 3rem !important;
+        top: 12rem !important; //15rem !important;
+        right: 5rem !important; //6rem !important;
     }
 }
 
 @media only screen and (max-width: 800px) {
     .Toastify__toast-container {
-        top: 13rem !important;
-        right: 4rem !important;
+        // top: 13rem !important;
+        // right: 4rem !important;
+        
+        top: 12rem !important; //15rem !important;
+        right: 5rem !important; //6rem !important;
     }
 
     .msg__container {
         .msg__icon {
-            padding: 1rem; //1rem 1.5rem;
+            padding: 0.5rem; //1rem 1.5rem;
         }
 
         .msg__text {
             padding: 1rem 2rem;
             padding-right: 7rem;
-            font-size: 2.5rem;
+            font-size: 2rem; //2.5rem;
         }
     }
 }
