@@ -132,12 +132,12 @@ function Aside({ setToggleMobileMenu }) {
 
                 <ul>
                     <li>
-                        <a href="https://twitter.com/Brc_Fi" target="_blank">
+                        <a href="https://twitter.com/BRCPAD" target="_blank">
                             <img src={twitterIcon} alt="twitter" />
                         </a>
                     </li>
                     <li>
-                        <a href="https://t.me/BRC_Fi" target="_blank">
+                        <a href="https://t.me/BRCPAD" target="_blank">
                             <img src={telegramIcon} alt="telegram" />
                         </a>
                     </li>
