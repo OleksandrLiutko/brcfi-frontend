@@ -132,7 +132,7 @@ function Aside({ setToggleMobileMenu }) {
 
                 <ul>
                     <li>
-                        <a href="https://twitter.com/BRCPAD" target="_blank">
+                        <a href="https://twitter.com/brc_pad" target="_blank">
                             <img src={twitterIcon} alt="twitter" />
                         </a>
                     </li>
@@ -147,7 +147,7 @@ function Aside({ setToggleMobileMenu }) {
                         </a>
                     </li> */}
                     <li>
-                        <a href="https://brcpad.io" target="_blank">
+                        <a href="https://brcpad.com" target="_blank">
                             <img src={webIcon} alt="discord" />
                         </a>
                     </li>
