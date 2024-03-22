@@ -147,7 +147,7 @@ function Aside({ setToggleMobileMenu }) {
                         </a>
                     </li> */}
                     <li>
-                        <a href="https://brcfi.io" target="_blank">
+                        <a href="https://brcpad.io" target="_blank">
                             <img src={webIcon} alt="discord" />
                         </a>
                     </li>
