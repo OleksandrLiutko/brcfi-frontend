@@ -285,7 +285,7 @@ function Pool() {
                 Yes
               </button>
               <button
-                className="d-btn d-btn-outline"
+                className="d-btn d-btn-primary d-btn-outline"
                 onClick={() => {
                   closeModal();
                   setIsLoading(false);

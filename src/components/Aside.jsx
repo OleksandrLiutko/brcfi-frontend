@@ -37,15 +37,15 @@ function Aside({ setToggleMobileMenu }) {
     }
     return (
         <aside className={`app__menu`}>
-            <figure className="logo__container_aside hide-mobile gap-3 opacity-40" onClick={() => { navigate('/') }}>
+            {/* <figure className="logo__container_aside hide-mobile gap-3 opacity-40" onClick={() => { navigate('/') }}> */}
                 {/* <img
                     src={logo} alt="logo"
                     width={200}
                     height={50}
                 /> */}
-                <p>Main menu</p>
+                {/* <p>Main menu</p> */}
                 {/* <span>BrcFi</span> */}
-            </figure>
+            {/* </figure> */}
 
             <ul className="nav__list">
                 <li>
