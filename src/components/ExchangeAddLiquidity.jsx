@@ -490,7 +490,7 @@ function ExchangeAddLiquidity() {
           <div
             className={`coin-container rounded-${posChange ? "s" : "r"}-2xl`}
           >
-            <p>{posChange ? "From" : "To"}</p>
+            <p className={`text-${posChange ? "left" : "right"}`}>{posChange ? "From" : "To"}</p>
             <ExchangeSelectToken
               amount={
                 result
