@@ -9,8 +9,8 @@ import { useResponsiveView } from "../utils/customHooks";
 import { useModalState } from "../context/ModalContext";
 
 function ExchangeSelectToken({ amount, setAmount, token, setToken, list, tokenDataList, selectIcon, selectText, bordered, filled, label, value = true, disabled = false, inputDisabled = false, ...props }) {
-    console.log("list", list)
-    console.log("tokenDataList", tokenDataList)
+    // console.log("list", list)
+    // console.log("tokenDataList", tokenDataList)
     // tokenDataList = [{
     //     balance: 0, ticker: "BTC"
     // }, 

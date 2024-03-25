@@ -35,7 +35,7 @@ function DataList({
     setToken,
     setSelectedOption
 }) {
-    console.log("options", options)
+    // console.log("options", options)
     options = [
         { ticker: 'BTC', balance: 0 },
         { ticker: 'ORDI', balance: 0 },
@@ -126,7 +126,6 @@ function DataList({
                                         <img src={option.ticker === 'BTC' ? btcIcon : option.ticker.toLowerCase() === 'brpd'? brcfiIcon : option.ticker === 'ORDI' ? ordinalIcon :(() => {
                                             const selectedItem = appContext?.tokenDataList?.filter(item => item.symbol.toLowerCase() === option.ticker.toLowerCase());
                                             if (selectedItem && selectedItem.length > 0) {
-                                                console.log("selectdItem[0]", selectedItem[0].iconUrl)
                                                 return selectedItem[0].iconUrl + "?size=30x30";
                                             }
                                             return ordinalIcon;
