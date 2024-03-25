@@ -104,7 +104,7 @@ export function AuthStateProvider({ children }) {
   });
   const [network, setNetwork] = useState("mainnet");
 
-  const [tokenList, tokenSelectList, poolTokenLists, tokenBalances, tokenOne, tokenTwo, setTokenOne, setTokenTwo] = useTokenSelect(address);
+  const [tokenList, tokenSelectList, poolTokenLists, tokenBalanceList, tokenOne, tokenTwo, setTokenOne, setTokenTwo] = useTokenSelect(address);
   const [factoryWallet, poolList] = useLoadData(address);
   const [orderList, fetchOrderList] = useFetch(`${getMyOrderListApi}?address=${address}`)
   // const [rewardsData, fetchRewardsData] = useFetch(getRewardsApi(address));
@@ -337,6 +337,7 @@ export function AuthStateProvider({ children }) {
         unisatContext: {
           unisatWallet,
           connected,
+          setConnected,
           setUnisatInstalled,
           address,
           network,
@@ -349,6 +350,7 @@ export function AuthStateProvider({ children }) {
           poolList, //static data for app
           tokenList,
           tokenSelectList,
+          tokenBalanceList,
           poolTokenLists,
           tokenOne,
           tokenTwo,

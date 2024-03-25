@@ -23,15 +23,16 @@ function Header({ toggleWalletList, toggleNetworkList, toggleMobileMenu, setTogg
 
     const { unisatContext, authState } = useAuthState();
     const { messageApi } = useToast();
-    const { unisatWallet, connected, setUnisatInstalled, address, network, balance, connectWallet } = unisatContext;
+    const { unisatWallet, connected, setUnisatInstalled, address, network, balance, connectWallet, setConnected } = unisatContext;
     const isMobileView_800 = useResponsiveView();
     const isMobileView_500 = useResponsiveView(500);
     const navigate = useNavigate();
+    const [showDisconnect, setShowDisconnect] = useState(false)
 
     const toastRef = useRef();
 
-    const handleConnect = () => {
-        unisatContext.connectWallet();
+    const toggleDisconnect = () => {
+        setShowDisconnect(!showDisconnect)
     }
 
     useEffect(() => {

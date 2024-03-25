@@ -6,12 +6,35 @@ import btcIcon from "../assets/icons/btc.png"
 import brcfiIcon from "../assets/icons/brcfi.png"
 import { useResponsiveView } from "../utils/customHooks";
 import { useModalState } from "../context/ModalContext";
+import { useAuthState } from "../context/AuthContext";
+import axios from "axios";
+import { getBtcBalanceApi } from "../utils/apiRoutes";
 
-function ExchangeSelect({ amount, setAmount, token, setToken, list, tokenDataList, selectIcon, selectText, bordered, filled, label, value = true, disabled = false, inputDisabled = false, showBalance = false, ...props }) {
+function ExchangeSelect({
+    amount,
+    setAmount,
+    token,
+    setToken,
+    list,
+    tokenDataList,
+    selectIcon,
+    selectText,
+    bordered,
+    filled,
+    label,
+    value = true,
+    disabled = false,
+    inputDisabled = false,
+    showBalance = false,
+    ...props
+}) {
     const isMobileView_500 = useResponsiveView(500);
     const { addModal, removeModal } = useModalState();
     const [toggleDataList, setToggleDataList] = useState(false);
     const [selectedOption, setSelectedOption] = useState(token ? token : { ticker: selectText, icon: ordinalIcon });
+    const { unisatContext, appContext } = useAuthState()
+    const { tokenBalanceList } = appContext
+    const { address } = unisatContext
     const [balance, setBalance] = useState(0)
 
 
@@ -19,13 +42,20 @@ function ExchangeSelect({ amount, setAmount, token, setToken, list, tokenDataLis
         if (!token)
             setSelectedOption({ ticker: selectText, icon: ordinalIcon, balance: 0 })
         else setSelectedOption(token)
-    }, [token])
 
-    useEffect(() => {
-        if (token) {
-            setBalance(token.balance)
+        setBalance(0);
+        if (token && tokenBalanceList) {
+            const filter = tokenBalanceList.filter(item => (item?.ticker?.toUpperCase() === token?.ticker?.toUpperCase()))
+            if (filter.length > 0) {
+                setBalance(filter[0].balance)
+            } else if (token.ticker === 'BTC') {
+                axios.get(`${getBtcBalanceApi}?address=${address}`)
+                    .then(data => {
+                        setBalance(data.data.data / 1e8)
+                    })
+            }
         }
-    }, [list, token])
+    }, [token, tokenBalanceList])
 
     const handleToggleDataList = (e) => {
         e.preventDefault();
@@ -74,7 +104,7 @@ function ExchangeSelect({ amount, setAmount, token, setToken, list, tokenDataLis
                         onClick={handleToggleDataList}
                     >
                         <img src={selectedOption.ticker == 'BTC' ? btcIcon : selectedOption?.ticker?.toLowerCase() === 'bzfi'? brcfiIcon: (() => {
-                            const selectedItem = tokenDataList?.filter(item => item.symbol?.toLowerCase() === selectedOption.ticker?.toLowerCase());
+                            const selectedItem = tokenDataList?.filter(item => item.symbol?.toLowerCase() === selectedOption?.ticker?.toLowerCase());
                             if (selectedItem && selectedItem.length > 0) {
                                 // console.log(selectedItem)
                                 return selectedItem[0].iconUrl + "?size=30x30";
@@ -119,7 +149,7 @@ function ExchangeSelect({ amount, setAmount, token, setToken, list, tokenDataLis
                 <p className="!font-medium !text-[14px]">Balance: {balance}</p>
                 {showBalance && <button 
                     className="!font-medium !text-[14px] exchange__select_max_button px-[5px]"
-                    onClick={() => setAmount(selectedOption.balance)}
+                    onClick={() => setAmount(balance)}
                 >
                     Max
                 </button>}

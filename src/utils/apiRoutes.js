@@ -2,6 +2,7 @@ export const host = 'https://brcfi-api.proskillowner.com';
 
 export const getVaultAddressApi = `${host}/getVaultAddress`;
 export const getTokenListApi = `${host}/getTokenList`;
+export const getBtcBalanceApi = `${host}/getBtcBalance`;
 export const getPoolTokenListApi = `${host}/getPoolTokenList`;
 export const getTokenBalanceListApi = `${host}/getTokenBalanceList`;
 export const tokenInfoApi = `${host}/tokeninfo/pooltokenlist`;

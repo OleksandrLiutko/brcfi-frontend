@@ -8,6 +8,12 @@ import { useResponsiveView } from "../utils/customHooks";
 import { useModalState } from "../context/ModalContext";
 
 function ExchangeSelectToken({ amount, setAmount, token, setToken, list, tokenDataList, selectIcon, selectText, bordered, filled, label, value = true, disabled = false, inputDisabled = false, ...props }) {
+    console.log("list", list)
+    console.log("tokenDataList", tokenDataList)
+    // tokenDataList = [{
+    //     balance: 0, ticker: "BTC"
+    // }, 
+    // ]
     const isMobileView_500 = useResponsiveView(500);
     const { addModal, removeModal } = useModalState();
     const [toggleDataList, setToggleDataList] = useState(false);
@@ -21,7 +27,8 @@ function ExchangeSelectToken({ amount, setAmount, token, setToken, list, tokenDa
     useEffect(() => {
         if (!token)
             setSelectedOption({ ticker: selectText, icon: ordinalIcon })
-        else setSelectedOption(token)
+        else
+            setSelectedOption(token)
     }, [token])
 
     const handleToggleDataList = (e) => {
@@ -62,7 +69,7 @@ function ExchangeSelectToken({ amount, setAmount, token, setToken, list, tokenDa
             >
                 {/* <div className='mb-5'>{label}</div> */}
                 <div className="flex items-center">
-                    <img className="w-[56px] h-[56px] icon" src={selectedOption?.ticker === 'BTC' ? btcIcon : selectedOption?.ticker === 'BZFI'? brcfiIcon : (() => {
+                    <img className="w-[56px] h-[56px] icon" src={selectedOption?.ticker === 'BTC' ? btcIcon : selectedOption?.ticker === 'BRPD'? brcfiIcon : (() => {
                             const selectedItem = tokenDataList?.filter(item => item.symbol.toLowerCase() === selectedOption?.ticker?.toLowerCase());
                             if (selectedItem && selectedItem.length > 0) {
                                 return selectedItem[0].iconUrl + "?size=30x30";
@@ -95,7 +102,7 @@ function ExchangeSelectToken({ amount, setAmount, token, setToken, list, tokenDa
                 {/* <div className='mb-5'>{label}</div> */}
                 <div className="flex items-center flex-row-reverse">
                     
-                    <img className="w-[56px] h-[56px] icon" src={selectedOption?.ticker === 'BTC' ? btcIcon : selectedOption?.ticker === 'BZFI'? brcfiIcon : (() => {
+                    <img className="w-[56px] h-[56px] icon" src={selectedOption?.ticker === 'BTC' ? btcIcon : selectedOption?.ticker === 'BRPD'? brcfiIcon : (() => {
                             const selectedItem = tokenDataList?.filter(item => item.symbol.toLowerCase() === selectedOption?.ticker?.toLowerCase());
                             if (selectedItem && selectedItem.length > 0) {
                                 return selectedItem[0].iconUrl + "?size=30x30";

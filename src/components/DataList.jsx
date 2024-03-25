@@ -1,8 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import searchIcon from "../assets/icons/search.svg";
-import ordinalIcon from "../assets/icons/ordinals.svg"
+// import ordinalIcon from "../assets/icons/ordinals.svg"
+import ordinalIcon from "../assets/icons/ordi.png"
 import btcIcon from "../assets/icons/btc.png"
-import brcfiIcon from "../assets/icons/brcfi.png"
+// import brcfiIcon from "../assets/icons/brcfi.png"
+import brcfiIcon from "../assets/icons/brpd.png"
 
 function useOutsideAlerter(ref, show, cb) {
     useEffect(() => {
@@ -33,6 +35,13 @@ function DataList({
     setToken,
     setSelectedOption
 }) {
+    console.log("options", options)
+    options = [
+        { ticker: 'BTC', balance: 0 },
+        { ticker: 'ORDI', balance: 0 },
+        { ticker: 'SATS', balance: 0 },
+        { ticker: 'BRPD', balance: 0 },
+    ]
     const [keyword, setKeyword] = useState("");
     const [filteredOptions, setFilteredOptions] = useState(options.slice(0, 100));
     const { authState, appContext } = useAuthState();
@@ -102,8 +111,7 @@ function DataList({
             <div className="datalist__options">
                 {filteredOptions.map((option, index) => (
                     <div
-                        className={`datalist__option ${typeRadio && option.value === authState.network ? "active" : ""
-                            }`}
+                        className={`datalist__option ${typeRadio && option.value === authState.network ? "active" : ""}`}
                         key={index}
                         onClick={(e) => {
                             setSelectedOption(option);
@@ -115,9 +123,10 @@ function DataList({
                             <>
                                 <div className="flex justify-between w-[100%]">
                                     <div className="flex" style={{alignItems: "center"}}>
-                                        <img src={option.ticker === 'BTC' ? btcIcon : option.ticker.toLowerCase() === 'bzfi'? brcfiIcon : (() => {
+                                        <img src={option.ticker === 'BTC' ? btcIcon : option.ticker.toLowerCase() === 'brpd'? brcfiIcon : option.ticker === 'ORDI' ? ordinalIcon :(() => {
                                             const selectedItem = appContext?.tokenDataList?.filter(item => item.symbol.toLowerCase() === option.ticker.toLowerCase());
                                             if (selectedItem && selectedItem.length > 0) {
+                                                console.log("selectdItem[0]", selectedItem[0].iconUrl)
                                                 return selectedItem[0].iconUrl + "?size=30x30";
                                             }
                                             return ordinalIcon;

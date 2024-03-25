@@ -5,10 +5,11 @@ import axios from 'axios';
 
 export default function Modal({ onClose, onConfirm }) {
     const [showCustom, setShowCustom] = useState(false);
-    const [feeRate, setFeeRate] = useState(5);
+    const [feeRate, setFeeRate] = useState(1);
     const [loading, setLoading] = useState(false);
-    const [rateValues, setRateValues] = useState([5, 5, 5]);
-
+    const [rateValues, setRateValues] = useState([1, 1, 1]);
+    const [selectedOption, setSelectedOption] = useState(0)
+    console.log('rateValues :>> ', rateValues);
     useEffect(() => {
         (async () => {
             setLoading(true);
@@ -17,8 +18,8 @@ export default function Modal({ onClose, onConfirm }) {
                     method: 'get',
                     url: feeRateUrl
                 });
-                setRateValues([res.data?.hourFee || 5, res.data?.halfHourFee || 5, res.data?.fastestFee || 5]);
-                setFeeRate(res.data?.halfHourFee || 5)
+                setRateValues([res.data?.hourFee, res.data?.halfHourFee, res.data?.fastestFee]);
+                setFeeRate(res.data?.halfHourFee)
             } catch(err) {
                 console.log(err)
             } finally {

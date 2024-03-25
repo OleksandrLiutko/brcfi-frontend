@@ -29,7 +29,7 @@ const columns = [
   columnHelper.accessor("no", {
     header: () => <span>No</span>,
     cell: (info) => info.getValue(),
-    width: "20px",
+        width: '20px'
   }),
   columnHelper.accessor("fee_txid", {
     header: () => "Transaction",
@@ -45,14 +45,14 @@ const columns = [
   }),
   columnHelper.accessor("token1", {
     header: "Token Pair",
-    cell: (props) => <PoolRender record={props.row.original} />,
+        cell: (props) => <PoolRender record={props.row.original} />
   }),
   columnHelper.accessor("lp_token", {
     header: "LP Token",
   }),
-  columnHelper.accessor("order_status", {
-    header: "Order Status",
-    cell: (info) => <OrderStatus status={info.getValue()} />,
+    columnHelper.accessor('order_status', {
+        header: 'Order Status',
+        cell: (info) => <OrderStatus status={info.getValue()} />
   }),
   columnHelper.accessor("description", {
     header: "Description",
@@ -62,38 +62,16 @@ const columns = [
 function Pool() {
   const { messageApi } = useToast();
   const { unisatContext, appContext } = useAuthState();
-  const {
-    unisatWallet,
-    connected,
-    setUnisatInstalled,
-    address,
-    network,
-    balance,
-    connectWallet,
-    checkConnect,
-  } = unisatContext;
-  const {
-    factoryWallet,
-    tokenList,
-    tokenSelectList,
-    tokenOne,
-    tokenTwo,
-    setTokenOne,
-    setTokenTwo,
-    orderList,
-    loadOrderList,
-    currentPool,
-    whiteist,
-    tokenDataList,
-  } = appContext;
+    const { unisatWallet, connected, setUnisatInstalled, address, network, balance, connectWallet, checkConnect } = unisatContext;
+    const { factoryWallet, tokenList, tokenSelectList, tokenOne, tokenTwo, setTokenOne, setTokenTwo, orderList, loadOrderList, currentPool, whiteist, tokenDataList } = appContext;
 
-  const [lPTokenTick, setLPTokenTick] = useState("");
-  const [lPMax, setLPMax] = useState("");
+    const [lPTokenTick, setLPTokenTick] = useState('');
+    const [lPMax, setLPMax] = useState('');
 
   const { modalState, openModal, closeModal } = useModalState();
   const [isLoading, setIsLoading] = useState(false);
   const [posChange, setPosChange] = useState(false);
-  const [hint, setHint] = useState("LP Token to Deploy");
+    const [hint, setHint] = useState('LP Token to Deploy');
   const [showFeeReteModal, setShowFeeRateModal] = useState(false);
   const [feeRate, setFeeRate] = useState(1);
   const [fee, setFee] = useState(0);
@@ -103,37 +81,39 @@ function Pool() {
     return async () => {
       closeModal();
       await sleep(0.1);
-    };
-  }, []);
+        }
+    }, [])
 
   useEffect(() => {
-    axios.get(`${createPoolFeeApi}?fee_rate=${feeRate}`).then(({ data }) => {
-      setFee(data.data);
-    });
+        axios.get(`${createPoolFeeApi}?fee_rate=${feeRate}`)
+            .then(({ data }) => {
+                setFee(data.data)
+            })
   }, [feeRate]);
 
   useEffect(() => {
     // console.log('currentPool :>> ', currentPool);
     if (currentPool) {
-      setLPTokenTick(currentPool.lp_token);
-    } else {
-      setLPTokenTick("");
+            setLPTokenTick(currentPool.lp_token)
+        }
+        else {
+            setLPTokenTick('')
     }
-  }, [currentPool]);
+    }, [currentPool])
 
   const handleLPTokenTick = (e) => {
     const value = e.target.value.trim();
     if (value.length <= 4) setLPTokenTick(value);
-  };
+    }
 
   const handleLPMax = (e) => {
     const isNumber = /^-?\d*\.?\d+$/;
     let value = e.target.value;
-    if (value == "" || isNumber.test(value)) {
-      if (value >= 21000000) value = "21000000";
+        if (value == '' || isNumber.test(value)) {
+            if (value >= 21000000) value = '21000000';
       setLPMax(value);
     }
-  };
+    }
 
   const handleCreatePool = async () => {
     setIsLoading(true);
@@ -142,7 +122,7 @@ function Pool() {
 
     if (!walletCheck) return;
     if (!tokenOne || !tokenTwo) {
-      messageApi.notifyWarning("Please Select tokens");
+            messageApi.notifyWarning('Please Select tokens');
       return;
     }
     try {
@@ -160,79 +140,70 @@ function Pool() {
         token2: tokenTwo.ticker,
         lp_token: lPTokenTick,
         lp_token_max_supply: Number(lPMax),
-      };
+            }
       // console.log('window.unisat :>> ', body);
       const { data } = await axios({
-        method: "post",
+                method: 'post',
         url: createPoolApi,
         withCredentials: false,
         data: body,
       });
       // console.log('createPool', data);
-      if (data.status == "ok") {
+            if (data.status == 'ok') {
         closer();
-        messageApi.notifySuccess(
-          "Create pool order is successfully listed!",
-          5
-        );
+                messageApi.notifySuccess('Create pool order is successfully listed!', 5)
         await loadOrderList();
         await sleep(1);
-      } else {
-        messageApi.notifyFailed("Failed!" + data.message);
+            }
+            else {
+                messageApi.notifyFailed('Failed!' + data.message)
       }
     } catch (error) {
       console.error(error);
-      messageApi.notifyFailed("User canceled order");
+            messageApi.notifyFailed('User canceled order')
     }
     setIsLoading(false);
     closeModal();
-  };
+    }
 
   const handleCreatePoolBtn = (e) => {
     let hint;
     e.preventDefault();
     if (currentPool) {
-      messageApi.notifyWarning("Pool already exists!");
+            messageApi.notifyWarning('Pool already exists!');
       return;
     }
     if (!tokenOne || !tokenTwo) {
-      messageApi.notifyWarning("Please Select tokens.");
+            messageApi.notifyWarning('Please Select tokens.');
       return;
     }
 
     if (lPTokenTick.length < 4) {
-      messageApi.notifyWarning("Please input LP token ticker.");
+            messageApi.notifyWarning('Please input LP token ticker with 4 letters.');
       return;
     }
-    if (
-      tokenList.find(
-        (token) => token.ticker.toUpperCase() === lPTokenTick.toUpperCase()
-      )
-    ) {
+        if (tokenList.find((token) => token.ticker.toUpperCase() === lPTokenTick.toUpperCase())) {
       messageApi.notifyWarning(`${lPTokenTick} was already deployed`);
       return;
     }
-    if (lPMax == "") {
-      messageApi.notifyWarning("Please input LP token max supply.");
+        if (Number(lPMax) < 21000000) {
+            messageApi.notifyWarning('Please input LP token max supply greater or equal than 21000000.');
       return;
     }
     // openModal();
-    setShowFeeRateModal(true);
-  };
+        setShowFeeRateModal(true)
+    }
 
   const CreatePoolBtn = () => {
     if (!connected)
       return (
         <button
           className="d-btn d-btn-primary center-margin active"
-          onClick={(e) => {
-            e.preventDefault();
-            connectWallet();
-          }}
+                    onClick={(e) => { e.preventDefault(); connectWallet(); }}
         >
           Connect wallet
         </button>
-      );
+            )
     return (
       <button
         className="d-btn d-btn-primary center-margin active"
@@ -240,63 +211,51 @@ function Pool() {
       >
         Create a new pool
       </button>
-    );
-  };
+        )
+    }
 
   useEffect(() => {
-    let hint = "";
+        let hint = ''
     if (!tokenTwo || !tokenOne) {
-      hint = "LP Token to Deploy";
-    } else {
-      if (currentPool) hint = "Pool already exists.";
+            hint = "LP Token to Deploy"
+        }
+        else {
+            if (currentPool) hint = "Pool already exists."
     }
     setHint(hint);
-  }, [tokenOne, tokenTwo, currentPool]);
+    }, [tokenOne, tokenTwo, currentPool])
 
   const onCloseFeeRateModal = (e) => {
-    setShowFeeRateModal(false);
-  };
+        setShowFeeRateModal(false)
+    }
 
   const onConfirmFeeRate = (feeRate) => {
     setFeeRate(feeRate);
     openModal();
     setShowFeeRateModal(false);
-  };
+    }
 
   return (
     <>
-      {showFeeReteModal && (
-        <Modal onClose={onCloseFeeRateModal} onConfirm={onConfirmFeeRate} />
-      )}
+        {showFeeReteModal && <Modal onClose={onCloseFeeRateModal} onConfirm={onConfirmFeeRate} />}
       {modalState.open && (
         <ReactPortal>
           <section className="modal__content">
-            <h2>
-              Are you sure to create a new pool for {tokenOne?.ticker}/
-              {tokenTwo?.ticker} with a service fee of {fee / 1e8} BTC?
-            </h2>
+                    <h2>Are you sure to create a new pool for {tokenOne?.ticker}/{tokenTwo?.ticker} with a service fee of {fee / 1e8} BTC?</h2>
 
             <div className="btn-group">
-              <button
-                className="d-btn d-btn-primary active"
-                onClick={handleCreatePool}
-              >
+                        <button className="d-btn d-btn-primary active" onClick={handleCreatePool}>
                 {isLoading && <span className="loader-animation"></span>}
                 Yes
               </button>
-              <button
-                className="d-btn d-btn-primary d-btn-outline"
-                onClick={() => {
-                  closeModal();
-                  setIsLoading(false);
-                }}
-              >
+                        <button className="d-btn d-btn-primary d-btn-outline" onClick={() => { closeModal(); setIsLoading(false) }}>
                 No
               </button>
             </div>
           </section>
         </ReactPortal>
-      )}
+        )
+        }
       <section className="pool__container">
         <h1>Pool</h1>
         <section className="transaction__panel pool__content center-margin">
@@ -423,16 +382,10 @@ function Pool() {
                     <Filters />
                 </header> */}
 
-          <DataTable
-            type={1}
-            dataSource={orderList}
-            columns={columns}
-            title="Create new pool Order List"
-          />
+                <DataTable type={1} dataSource={orderList} columns={columns} title="Create new pool Order List" />
         </section>
       </section>
-    </>
-  );
+    </>);
 }
 
 export default Pool;
