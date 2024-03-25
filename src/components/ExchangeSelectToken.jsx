@@ -4,6 +4,7 @@ import { searchOptions } from "../assets/data";
 import ordinalIcon from "../assets/icons/ordinals.svg"
 import btcIcon from "../assets/icons/btc.png"
 import brcfiIcon from "../assets/icons/brcfi.png"
+import brpdIcon from "../assets/icons/brpd.png"
 import { useResponsiveView } from "../utils/customHooks";
 import { useModalState } from "../context/ModalContext";
 
@@ -69,7 +70,7 @@ function ExchangeSelectToken({ amount, setAmount, token, setToken, list, tokenDa
             >
                 {/* <div className='mb-5'>{label}</div> */}
                 <div className="flex items-center">
-                    <img className="w-[56px] h-[56px] icon" src={selectedOption?.ticker === 'BTC' ? btcIcon : selectedOption?.ticker === 'BRPD'? brcfiIcon : (() => {
+                    <img className="w-[56px] h-[56px] icon" src={selectedOption?.ticker === 'BTC' ? btcIcon : selectedOption?.ticker === 'BRPD'? brpdIcon : (() => {
                             const selectedItem = tokenDataList?.filter(item => item.symbol.toLowerCase() === selectedOption?.ticker?.toLowerCase());
                             if (selectedItem && selectedItem.length > 0) {
                                 return selectedItem[0].iconUrl + "?size=30x30";
@@ -102,7 +103,7 @@ function ExchangeSelectToken({ amount, setAmount, token, setToken, list, tokenDa
                 {/* <div className='mb-5'>{label}</div> */}
                 <div className="flex items-center flex-row-reverse">
                     
-                    <img className="w-[56px] h-[56px] icon" src={selectedOption?.ticker === 'BTC' ? btcIcon : selectedOption?.ticker === 'BRPD'? brcfiIcon : (() => {
+                    <img className="w-[56px] h-[56px] icon" src={selectedOption?.ticker === 'BTC' ? btcIcon : selectedOption?.ticker === 'BRPD'? brpdIcon : (() => {
                             const selectedItem = tokenDataList?.filter(item => item.symbol.toLowerCase() === selectedOption?.ticker?.toLowerCase());
                             if (selectedItem && selectedItem.length > 0) {
                                 return selectedItem[0].iconUrl + "?size=30x30";
